@@ -1,6 +1,18 @@
 <?php 
 include("../includes/config.php");
 
+if(isset($_POST['create'])){
+    $fname=trim(ucwords($_POST['firstname']));
+    $lname=trim(ucwords($_POST['lastname']));
+    $fname=trim(ucwords($_POST['firstname']));
+    $fname=trim(ucwords($_POST['firstname']));
+    $fname=trim(ucwords($_POST['firstname']));
+    $fname=trim(ucwords($_POST['firstname']));
+    $fname=trim(ucwords($_POST['firstname']));
+    
+}
+
+
 
 ?>
 <!DOCTYPE html>
@@ -55,6 +67,9 @@ include("../includes/config.php");
                         <option value="admin">Admin</option>
                         <option value="user">User</option>
                     </select>
+                </div>
+                <div class="btn">
+                    <button type="submit" class="btn btn-primary" value="create">Create</button>
                 </div>
             </div>
         </form>
