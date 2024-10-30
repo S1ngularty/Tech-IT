@@ -4,7 +4,7 @@ include("../includes/config.php");
 if(isset($_POST['login'])){
     $sql1="SELECT account_id, role FROM account where username=? && password=?";
     $stmt1=mysqli_prepare($conn,$sql1);
-    mysqli_stmt_bind_param($stmt1,'ss',$_POST['username'],$_POST['password']);
+    mysqli_stmt_bind_param($stmt1,'ss',$_POST['username'],sha1($_POST['password']));
     $result=mysqli_stmt_execute($stmt1);
         mysqli_stmt_store_result($stmt1);
         mysqli_stmt_bind_result($stmt1,$ID,$role);
