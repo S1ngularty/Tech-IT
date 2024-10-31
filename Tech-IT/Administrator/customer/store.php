@@ -30,7 +30,7 @@ $extension=strtolower(end($file_ext));
 
 if(in_array($extension,$allowed)){
     echo $newfile=uniqid('',true).".".$extension;
-    $location="uploads/".$newfile;
+    $location="uploads/".$newfile;  
 
     $sql2="INSERT INTO account (user_id,username,password,role,profile_img)values(?,?,?,?,?)";
     $stmt2=mysqli_prepare($conn,$sql2);

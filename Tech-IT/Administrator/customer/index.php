@@ -20,7 +20,7 @@ $result=mysqli_query($conn,$sql);
 
 
 if(mysqli_affected_rows($conn)>0){
-    print "<body> <div class='container'> <div class='table_div'>  <form action='index.php' method='post'>
+    print "<body> <div class='container'> <div class='table_div'>
   <table width='50%' cellpadding='6' class='table'>
     <tr>
     <th>Customer ID</th>
@@ -32,16 +32,16 @@ if(mysqli_affected_rows($conn)>0){
     while($row= mysqli_fetch_assoc($result)){
 print "<tr>
 <td>{$row['account_id']}</td>
-<td>{$row['first_name']}</td>
+<td>{$row['first_name']} &nbsp {$row['last_name']}</td>
 <td><a href='view.php?id={$row['account_id']}' style='text-decoration:none;'>{$row['username']}<a></td>
-<td><form action='update.php' method='post'><input type='radio' ".($row['role']=='admin'? 'checked' : '')." name='role' value='admin' onclick='this.form.submit()'><label class=='form-control'>Admin</label>
-<input type='radio'  name='role' value='user'".($row['role']=='user'? 'checked' : '')." onclick='this.form.submit()'  ><label class=='form-control'>User</label>
-<input type='hidden' name='ID' value='{$row['account_id']}'></form></td>
-<td><button type='submit' name='edit' value='edit' class='btn btn-primary'><a href='edit.php?id={$row['account_id']}' style='color:white; text-decoration:none;'>Edit</a></button>
-<button type='submit' name='delete' value='delete' class='btn btn-danger' ><a href='delete.php?id={$row['account_id']}' style='color:white; text-decoration:none;'>Delete</a></button></td>";
+<td><form action='update.php?ID={$row['account_id']}' method='post'><input type='radio' ".($row['role']=='admin'? 'checked' : '')." name='role' value='admin' onclick='this.form.submit()'><label class=='form-control'>Admin</label>
+<input type='radio'  name='role' value='user'".($row['role']=='user'? 'checked' : '')." onclick='this.form.submit()'  ><label class=='form-control'>User</label></form></td>
+<td><button type='submit' name='edit' value='edit' class='btn btn-primary'><a href='edit.php?id={$row['user_id']}' style='color:white; text-decoration:none;'>Edit</a></button>
+<button type='submit' name='delete' value='delete' class='btn btn-danger' ><a href='delete.php?id={$row['user_id']}' style='color:white; text-decoration:none;'>Delete</a></button></td>
+<input type ='hidden' name='IDs[]' value='{$row['account_id']}'></tr>";
 
     }
-    print "</table></form></div></div></body>";
+    print "</table></div></div></body>";
 }
 ?>
 <style>
