@@ -1,3 +1,7 @@
+<?php
+include '../includes/config.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,31 +37,26 @@
         </ul>
     </nav>
 
-    <!-- Main Content -->
+    <!-- Product display part palang wala pang function yung button -->
     <div class="main-content">
         <div class="product-container">
-            <!-- Product Cards -->
-            <div class="product-card">
-                <img src="https://via.placeholder.com/300x200" alt="Product Image">
-                <h5>Product Name</h5>
-                <p>Product description goes here.</p>
-                <p class="price">$99.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card">
-                <img src="https://via.placeholder.com/300x200" alt="Product Image">
-                <h5>Another Product</h5>
-                <p>Another description with highlights.</p>
-                <p class="price">$149.99</p>
-                <button>Add to Cart</button>
-            </div>
-            <div class="product-card">
-                <img src="https://via.placeholder.com/300x200" alt="Product Image">
-                <h5>Third Product</h5>
-                <p>Description for the third product.</p>
-                <p class="price">$199.99</p>
-                <button>Add to Cart</button>
-            </div>
+            <?php 
+            $sql_display="SELECT * FROM product";
+            $result = mysqli_query($conn, $sql_display);
+            if (mysqli_num_rows($result) > 0) {
+                while($row = mysqli_fetch_assoc($result)) {
+                    echo '<div class="product-card">';
+                    echo '<img src="' . $row['product_img'] . '" alt="Product Image">';
+                    echo '<h5>' . $row['product_name'] .'</h5>';
+                    echo '<p>' . $row['product_description'] . '</p>';
+                    echo '<p class="price">$' . $row['price'] . '</p>';
+                    echo '<button>Add to Cart</button>';
+                    echo '</div>';
+                }
+            } else {
+                echo "No products found.";
+            }
+            ?>
         </div>
     </div>
 
