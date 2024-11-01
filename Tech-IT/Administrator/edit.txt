@@ -1,0 +1,41 @@
+ $file_ext=explode('.',$filename);
+           echo $extension=strtolower(end($file_ext));
+            
+            if(in_array($extension,$allowed)){
+                echo $newfile=uniqid('',true).".".$extension;
+                $location="uploads/".$newfile;
+                $sql3="UPDATE account SET username=?, password=?, profile_img=? where user_id=?";
+                $stmt3=mysqli_prepare($conn,$sql3);
+                mysqli_stmt_bind_param($stmt3,'sssi',$username,$password,$newfile,$_SESSION['update_id']);
+                mysqli_stmt_execute($stmt3);
+
+                if(mysqli_stmt_affected_rows($stmt3)>0){
+                if(file_exists($current_path)){
+                    if(unlink($current_path)){
+                     if(move_uploaded_file($file_temp,$location)){
+                      mysqli_commit($conn);
+                      header("location:index.php");
+                      exit;
+                      
+                     }else{
+                        throw new Exception("failed to move your file");
+                     }
+                    }else{
+                        throw new Exception("failed to override you current profile");
+                    }
+                }else{
+                    if(move_uploaded_file($file_temp,$location)){
+                        mysqli_commit($conn);
+                        $_SESSION['update_id']=array();
+                        header("location:index.php");
+                        exit;
+                       }else{
+                          throw new Exception("failed to move and create your file");
+                       }
+                }
+                }else{
+                    throw new Exception("cant update your account");
+                }
+            }else{
+                throw new Exception("invalid image format");
+            }
