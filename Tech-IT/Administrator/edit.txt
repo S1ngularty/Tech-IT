@@ -1,0 +1,42 @@
+Sure! Here’s a breakdown of the modifications made to implement the popup functionality without using JavaScript:
+
+### Modifications Summary
+
+1. **Edit Button Changes**:
+   - Changed the "Edit" button from a `<button>` to an anchor `<a>` tag that links to the popup's ID:
+   ```php
+   <a href='#pop_edit_{$row['category_id']}' class='btn btn-primary'>Edit</a>
+   ```
+
+2. **Popup Structure**:
+   - Each popup has a unique ID based on the `category_id`, ensuring that clicking on the corresponding edit link targets the correct popup:
+   ```php
+   <div id='pop_edit_{$row['category_id']}' class='popup'>
+   ```
+
+3. **Close Button**:
+   - The close button is now an anchor `<a>` tag that links to `#`, which effectively closes the popup by navigating away from the targeted ID:
+   ```php
+   <a href='#' class='close-button'>&times;</a>
+   ```
+
+4. **CSS for Popup Display**:
+   - Added a CSS rule that uses the `:target` pseudo-class to display the popup when its ID is targeted:
+   ```css
+   .popup:target {
+       display: flex; /* Show the popup when targeted */
+   }
+   ```
+
+5. **Removed JavaScript**:
+   - Removed all JavaScript-related code to comply with the requirement of not using JS for popup functionality.
+
+### Key Components of the Modified Code
+
+- **Popup Trigger**: Clicking the "Edit" link activates the popup.
+- **Popup Structure**: Each popup includes a unique ID, which is linked to by the edit button.
+- **Closing the Popup**: The close button simply links back to `#`, which removes the focus from the popup.
+
+### Result
+
+These changes allow the popup to be opened and closed purely through HTML and CSS, utilizing the `:target` pseudo-class to manage visibility based on the URL fragment (hash). This keeps the implementation simple and effective without any JavaScript code.
