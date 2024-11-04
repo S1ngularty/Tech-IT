@@ -14,7 +14,10 @@ if(isset($_POST['login'])){
        if($role==='admin'){
         header("location:../index.php");
         exit;
-       }
+       } elseif ($role === 'user') {
+        header("location:../Shop.php"); // Ayaw mag redirect pag nasa labas ng admin folder nakakataas ng dugo;<
+        exit;
+    }
         } else  {
         print "account doesn't exist";
     }

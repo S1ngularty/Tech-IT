@@ -171,26 +171,35 @@ include '../Administrator/includes/config.php';
 
     <!-- Main Content -->
     <div class="main-content">
-        <div class="product-container">
-            <?php 
-            $sql_display="SELECT * FROM product";
-            $result = mysqli_query($conn, $sql_display);
-            if (mysqli_num_rows($result) > 0) {
-                while($row = mysqli_fetch_assoc($result)) {
-                    echo '<div class="product-card">';
-                    echo '<img src="../Administrator/Product/uploads/' . $row['product_img'] . '" alt="Product Image">';
-                    echo '<h5>' . $row['product_name'] .'</h5>';
-                    echo '<p>' . $row['product_description'] . '</p>';
-                    echo '<p class="price">$' . $row['price'] . '</p>';
-                    echo '<button>Add to Cart</button>';
-                    echo '</div>';
-                }
-            } else {
-                echo "No products found.";
+    <div class="product-container">
+        <?php 
+        $sql_display = "SELECT * FROM product";
+        $result = mysqli_query($conn, $sql_display);
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                echo '<div class="product-card">';
+                echo '<img src="../Administrator/Product/uploads/' . $row['product_img'] . '" alt="Product Image">';
+                echo '<h5>' . $row['product_name'] . '</h5>';
+                echo '<p>' . $row['product_description'] . '</p>';
+                echo '<p class="price">$' . $row['price'] . '</p>';
+                
+                echo '<form action="store.php" method="POST">';
+                echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
+                echo '<input type="hidden" name="total_amount" value="' . $row['price'] . '">';
+                echo '<input type="hidden" name="status" value="In Cart">';
+                
+                echo '<button type="submit">Add to Cart</button>';
+                echo '</form>';
+                
+                echo '</div>';
             }
-            ?>
-        </div>
+        } else {
+            echo "No products found.";
+        }
+        ?>
     </div>
+</div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
