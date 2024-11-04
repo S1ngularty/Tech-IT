@@ -151,10 +151,14 @@ include '../Administrator/includes/config.php';
                     <i class="fas fa-magnifying-glass"></i>
                 </button>
                 <select class="category-dropdown">
-                    <option value="">Category</option>
-                    <option value="laptops">Laptops</option>
-                    <option value="phones">Phones</option>
-                    <option value="accessories">Accessories</option>
+                <?php 
+                $sql1= 'SELECT * FROM category';
+                $result=mysqli_query($conn, $sql1);
+                while($row=mysqli_fetch_assoc($result)){
+                    print "<option value='{$row['category_id']}'> {$row['category_name']} </option>";
+                }
+                ?>    
+                
                 </select>
             </form>
             <i class="fas fa-cart-shopping"></i>
