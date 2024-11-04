@@ -22,11 +22,9 @@ SET time_zone = "+00:00";
 --
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `account`
---
-USE techit;
+CREATE DATABASE IF NOT EXISTS `techit` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+-- Use the newly created database
+USE `techit`;
 
 CREATE TABLE `account` (
   `account_id` int(11) NOT NULL,
