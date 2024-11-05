@@ -91,7 +91,7 @@ include '../Administrator/includes/config.php';
 .product-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 items per row */
-    gap: 20px;
+    gap: 35px;
     margin-top: 20px;
 }
 
@@ -105,14 +105,16 @@ include '../Administrator/includes/config.php';
 
 .product-card img {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
     border-radius: 10px;
 }
 
+
 .product-card h5 {
     font-size: 18px;
     margin: 10px 0;
+    font-weight: bold
 }
 
 .product-card p {
@@ -164,7 +166,7 @@ include '../Administrator/includes/config.php';
             <i class="fas fa-cart-shopping"></i>
             <div class="nav-links">
                 <li><a href="#">Profile</a></li>
-                <li><a href="http:/Tech-IT/customer/logout.php">Log out</a></li>
+                <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
             </div>
         </ul>
     </nav>

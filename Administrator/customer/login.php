@@ -15,7 +15,7 @@ if(isset($_POST['login'])){
         header("location:../index.php");
         exit;
        } elseif ($role === 'user') {
-        header("location:../Shop.php"); // Ayaw mag redirect pag nasa labas ng admin folder nakakataas ng dugo;<
+        header("location:http:/tech-it/User/Shop.php"); // Ayaw mag redirect pag nasa labas ng admin folder nakakataas ng dugo;<
         exit;
     }
         } else  {

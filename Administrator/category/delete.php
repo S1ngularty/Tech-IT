@@ -20,7 +20,7 @@ $c;
        }
     }
      
-  if($c>0) { 
+  if($c>=0) { 
     $sql="DELETE FROM category WHERE category_id=? ";
     $stmt1=mysqli_prepare($conn,$sql);
     mysqli_stmt_bind_param($stmt1,'i',$_GET['id']);
