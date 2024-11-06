@@ -9,20 +9,19 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-if (isset($_POST['product_id'], $_POST['total_amount'], $_POST['status'])) {
+if (isset($_POST['product_id'], $_POST['quantity'])) { // Fixed $_POST usage
     $product_id = $_POST['product_id'];
-    $total_amount = $_POST['total_amount'];
-    $status = $_POST['status'];
+    $quantity = $_POST['quantity'];
 
-    //Kulang pa sa orderline 
+    // Start transaction
     mysqli_begin_transaction($conn);
 
     try {
-        $sql4 = "INSERT INTO orders (user_id, orderDate, total_amount, status) VALUES (?, NOW(), ?, ?)";
+        $sql4 = "INSERT INTO cart (user_id, product_id, quantity, date_placed) VALUES (?,?,?,NOW())";
         $stmt4 = mysqli_prepare($conn, $sql4);
 
         if ($stmt4) {
-            mysqli_stmt_bind_param($stmt4, 'ids', $user_id, $total_amount, $status);
+            mysqli_stmt_bind_param($stmt4, 'iii', $user_id, $product_id, $quantity);
             if (!mysqli_stmt_execute($stmt4)) {
                 throw new Exception("ERROR: Could not add order to user.");
             }

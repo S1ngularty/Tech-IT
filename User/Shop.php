@@ -186,8 +186,9 @@ include '../Administrator/includes/config.php';
                 echo '<p class="price">$' . $row['price'] . '</p>';
                 
                 echo '<form action="store.php" method="POST">';
+                echo '<input type="hidden" name="user_id" value "' . 'user_id' . '">';
                 echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
-                echo '<input type="hidden" name="total_amount" value="' . $row['price'] . '">';
+                echo '<input type="number" name="quantity" value="' . 'quantity' . '" min="1" step="1" style = "width: 70px; margin-right:20px;"';
                 echo '<input type="hidden" name="status" value="In Cart">';
                 
                 echo '<button type="submit">Add to Cart</button>';
