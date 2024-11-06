@@ -18,15 +18,50 @@ $result = mysqli_query($conn, $sql_display);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<style>/* Main Content */
+<style>
+/* Navbar */
+#navbar {
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 50px;
+    width: 100%;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+}
+
+#logo {
+    font-size: 24px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Main Content */
 .main-content {
-    padding: 100px 20px 20px;
+    padding: 100px 20px 20px; /* Adjust for fixed navbar */
 }
 
 /* Product Container */
 .product-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 20px;
 }
@@ -74,10 +109,19 @@ $result = mysqli_query($conn, $sql_display);
 .product-card button:hover {
     background-color: #c82333;
 }
-
 </style>
 <body>
-<div class="main-content">
+    <!-- Navbar -->
+    <nav id="navbar">
+        <div id="logo">Tech-IT</div>
+        <ul class="nav-links">
+            <li><a href="#">Profile</a></li>
+            <li><a href="http:/Tech-IT/customer/logout.php">Log out</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
         <h2>Shopping Cart</h2>
         <div class="product-container">
             <?php 

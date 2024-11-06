@@ -86,7 +86,7 @@ if(isset($_POST['login'])){
     <button class="btn btn-primary" name="login" value="access">Log In</button>
 </div>
 <div id="create">
-   <p>Don't have an account?<a href="create.php">Create</a></p>
+   <p>Don't have an account? <a href="create.php">Create</a></p>
 </div>
   </form>
 
