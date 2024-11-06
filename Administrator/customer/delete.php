@@ -2,7 +2,7 @@
 include("../includes/config.php");
 
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
    try{
     mysqli_begin_transaction($conn);
     $sql2="SELECT profile_img FROM account where user_id={$_GET['id']}";
@@ -46,7 +46,11 @@ if(isset($_SESSION['user_id'])){
     print "encountered an error:".$e->getMessage();
 
    }
-}
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
 
 
 

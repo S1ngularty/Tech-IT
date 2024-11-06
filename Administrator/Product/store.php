@@ -1,6 +1,6 @@
 <?php 
 include("../includes/config.php");
-
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 if(isset($_POST['create'])){
 
 echo $item=$_POST['product_name'];
@@ -62,5 +62,12 @@ try{
 
 
 }
+
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
+
 
 ?>

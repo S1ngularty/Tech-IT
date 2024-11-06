@@ -1,4 +1,5 @@
 <?php 
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
  print "<div id='pop_create' class='popup'>
  <div class='popup-content'>
      <a href='#' class='close-button' style='padding-bottom:10px; text-decoration:none;'>&times;</a>
@@ -11,5 +12,12 @@
      </form>
  </div>
 </div>";
+
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
+
 
 ?>

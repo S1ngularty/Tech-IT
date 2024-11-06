@@ -1,7 +1,7 @@
 <?php 
 include("../includes/config.php");
 
-if(isset($_POST['create'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
     print "<pre>";
     echo $fname=trim(ucwords($_POST['firstname']));
     echo $lname=trim(ucwords($_POST['lastname']));
@@ -61,7 +61,11 @@ if(in_array($extension,$allowed)){
     print "encountered an error:".$e->getMessage();
     }
     
-}
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
 
 
 

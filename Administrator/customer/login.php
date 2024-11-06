@@ -1,16 +1,20 @@
 <?php 
 include("../includes/config.php");
+include("../alert.php");
 
-if(isset($_POST['login'])){
+    if(isset($_POST['login'])){
+        $username = trim($_POST['username']);
+    $password = sha1($_POST['password']);
     $sql1="SELECT account_id, role FROM account where username=? && password=?";
     $stmt1=mysqli_prepare($conn,$sql1);
-    mysqli_stmt_bind_param($stmt1,'ss',$_POST['username'],sha1($_POST['password']));
+    mysqli_stmt_bind_param($stmt1,'ss',$username,$password);
     $result=mysqli_stmt_execute($stmt1);
         mysqli_stmt_store_result($stmt1);
         mysqli_stmt_bind_result($stmt1,$ID,$role);
         if(mysqli_stmt_num_rows($stmt1)>0){
             mysqli_stmt_fetch($stmt1);
             $_SESSION['user_id']=$ID;
+            $_SESSION['role']=$role;
        if($role==='admin'){
         header("location:../index.php");
         exit;
@@ -19,7 +23,8 @@ if(isset($_POST['login'])){
         exit;
     }
         } else  {
-        print "account doesn't exist";
+       $_SESSION['login_error']='invalid_account';
+       include("../alert.php");
     }
 }
 

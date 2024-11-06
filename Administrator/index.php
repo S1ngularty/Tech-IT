@@ -3,7 +3,7 @@ include('includes/config.php');
 include('structure/Header.html');
 include('structure/sidebar.html');
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 echo $_SESSION['user_id'];
 ?>
 <!DOCTYPE html>
@@ -100,6 +100,10 @@ grid-template-rows: 100px 100px 100px 100px 50px;
 </html>
 
 <?php 
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/login.php");
+    exit;
 }
 
 ?>
