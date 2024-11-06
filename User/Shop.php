@@ -163,7 +163,7 @@ include '../Administrator/includes/config.php';
                 
                 </select>
             </form>
-            <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i>
+            <a href="cart.php"> <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i> </a>
             <div class="nav-links">
                 <li><a href="#">Profile</a></li>
                 <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
