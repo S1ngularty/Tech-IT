@@ -4,7 +4,7 @@ include('../structure/Header.html');
 include('../structure/sidebar.html');
 include('create.php');
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 
     $sql="SELECT c.category_name, 
     COUNT(pc.product_id) AS category_count, 
@@ -53,7 +53,11 @@ if(isset($_SESSION['user_id'])){
 
         print "</table></div></div></body>";
     }
-}
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
 ?>
 
 <style>

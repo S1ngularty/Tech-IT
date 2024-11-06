@@ -3,7 +3,7 @@ include("../includes/config.php");
 include('../structure/Header.html');
 include('../structure/sidebar.html');
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 $sql="SELECT *  FROM account inner join user using(user_id)";
 $result=mysqli_query($conn,$sql);
 
@@ -86,6 +86,10 @@ grid-template-rows: 100px 100px 100px 100px 100px 50px;
 
 
 
+}else{
+  $_SESSION['unauthenticated_error']="suspicious_access";
+  header("location: login.php");
+  exit;
 }
 
 ?>

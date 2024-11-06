@@ -1,5 +1,6 @@
 <?php 
 include("../includes/config.php");
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,3 +115,11 @@ form{
 
 </body>
 </html>
+
+<?php 
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
+?>

@@ -1,6 +1,6 @@
 <?php 
 include("../includes/config.php");
-
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 if(isset($_POST['edit'])){
   try { 
     mysqli_begin_transaction($conn);
@@ -21,5 +21,9 @@ if(isset($_POST['edit'])){
 }else{
     print "is not set";
 }
-
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
 ?>

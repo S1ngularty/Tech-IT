@@ -2,7 +2,7 @@
 include("../includes/config.php");
 
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
   try{
     $delete_path="uploads/".trim($_GET['img']);
     mysqli_begin_transaction($conn);
@@ -26,6 +26,10 @@ if(isset($_SESSION['user_id'])){
     mysqli_rollback($conn);
     print "error:". $e-> getMessage();
   }
+}else{
+  $_SESSION['unauthenticated_error']="suspicious_access";
+  header("location:http:/Tech-IT/Administrator/customer/index.php");
+  exit;
 }
 
 

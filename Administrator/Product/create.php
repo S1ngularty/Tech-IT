@@ -3,7 +3,7 @@ include("../includes/config.php");
 include('../structure/Header.html');
 include('../structure/sidebar.html');
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 $sql1="SELECT * FROM category";
 $result=mysqli_query($conn,$sql1);
 ?>
@@ -119,7 +119,12 @@ img{
 
 
 <?php 
-}
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
+
 
 
 ?>

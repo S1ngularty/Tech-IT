@@ -3,7 +3,7 @@ include("../includes/config.php");
 include('../structure/Header.html');
 include('../structure/sidebar.html');
 
-if(isset($_SESSION['user_id'])){
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 
     $sql="SELECT *  FROM product left join stocks using(product_id) left join
     product_category pc using(product_id) left join category c on c.category_id=pc.category_id where product_id={$_GET['id']}";
@@ -130,7 +130,11 @@ img{
 
 
 <?php 
-}
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
 
 
 ?>

@@ -1,5 +1,6 @@
 <?php 
 include("../includes/config.php");
+if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSION['role'])){
 $query2="SELECT category_id FROM category where category_name = 'Uncategorized'";
 $result2=mysqli_query($conn,$query2);
 $default=mysqli_fetch_assoc($result2);
@@ -38,6 +39,10 @@ $c;
     mysqli_rollback($conn);
     print "error : ".$e->getMessage();
 }
-
+}else{
+    $_SESSION['unauthenticated_error']="suspicious_access";
+    header("location:http:/Tech-IT/Administrator/customer/index.php");
+    exit;
+  }
 
 ?>
