@@ -1,6 +1,6 @@
 <?php 
 include '../Administrator/includes/config.php'; // Database connection
-session_start(); // Start the session
+session_start();
 
 if (!isset($_SESSION['user_id'])) {
     echo "Please log in to view your cart.";
@@ -9,118 +9,146 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch products with cart details only for the logged-in user
+// Fetch products for the logged-in user
 $sql_display = "SELECT p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id
                 FROM product p 
                 INNER JOIN cart c ON p.product_id = c.product_id
-                WHERE c.user_id = ?"; // Filter by user_id
+                WHERE c.user_id = ?";
 $stmt = mysqli_prepare($conn, $sql_display);
-mysqli_stmt_bind_param($stmt, 'i', $user_id); // Bind the user_id
+mysqli_stmt_bind_param($stmt, 'i', $user_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart - Tech-IT</title>
-    <link rel="stylesheet" href="styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
-<style>
-/* Navbar */
-#navbar {
+    <style>
+        /* Navbar */
+        #navbar {
+            background-color: #333;
+            display: flex;
+            align-items: right;
+            justify-content: right;
+            padding: 15px 50px;
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            z-index: 1;
+        }
+/* #navbar {
     background-color: #333;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 50px;
+    padding: 15px 50px;
     width: 100%;
     z-index: 1;
     position: fixed;
-    top: 0;
-}
+} */
+        #logo {
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+            position: absolute;
+            left: 50px;
+        }
 
-#logo {
-    font-size: 24px;
-    color: #fff;
-    font-weight: bold;
-}
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            font-size: 18px;
+        }
 
-.nav-links {
-    display: flex;
-    gap: 20px;
-}
+        .nav-links li {
+            list-style: none;
+        }
 
-.nav-links li {
-    list-style: none;
-}
+        .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            /* font-weight: bold; */
+        }
 
-.nav-links li a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-}
+        /* Main Content */
+        .main-content {
+            padding: 100px 20px 20px;
+        }
 
-/* Main Content */
-.main-content {
-    padding: 100px 20px 20px; /* Adjust for fixed navbar */
-}
+        /* Product Container */
+        .product-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-/* Product Container */
-.product-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-}
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-.product-card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 15px;
-    text-align: center;
-    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
 
-.product-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
-}
+        .product-card h5 {
+            font-size: 18px;
+            margin: 10px 0;
+        }
 
-.product-card h5 {
-    font-size: 18px;
-    margin: 10px 0;
-}
+        .product-card p {
+            font-size: 14px;
+            color: #555;
+        }
 
-.product-card p {
-    font-size: 14px;
-    color: #555;
-}
+        .product-card .price, .product-card .quantity, .product-card .date-added, .product-card .date-placed {
+            font-size: 14px;
+            color: #333;
+            margin: 5px 0;
+        }
 
-.product-card .price, .product-card .quantity, .product-card .date-added, .product-card .date-placed {
-    font-size: 14px;
-    color: #333;
-    margin: 5px 0;
-}
+        /* Buttons */
+        .product-card .btn-danger, .product-card .btn-update {
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
 
-.product-card button {
-    background-color: #dc3545; /* Cart removal button */
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        .product-card .btn-danger {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+        }
 
-.product-card button:hover {
-    background-color: #c82333;
-}
-</style>
+        .product-card .btn-update {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            margin-left: 10px;
+        }
+
+        .product-card .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        .product-card .btn-update:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
 <body>
     <!-- Navbar -->
     <nav id="navbar">
@@ -131,8 +159,8 @@ $result = mysqli_stmt_get_result($stmt);
         </ul>
     </nav>
 
- <!-- Main Content -->
- <div class="main-content">
+    <!-- Main Content -->
+    <div class="main-content">
         <h2>Shopping Cart</h2>
         <div class="product-container">
             <?php 
@@ -146,14 +174,13 @@ $result = mysqli_stmt_get_result($stmt);
                     echo '<p class="quantity">Quantity in Cart: ' . $row['quantity'] . '</p>';
                     echo '<p class="date-added">Added on: ' . date("F j, Y", strtotime($row['date_added'])) . '</p>';
                     echo '<p class="date-placed">Date Placed: ' . date("F j, Y", strtotime($row['date_placed'])) . '</p>';
-                    echo '<a href="delete.php?id=' . $row['cart_id'] . '" class="btn btn-danger">Remove from Cart</a>';
-                    echo '<form action="update.php" method="POST">';
+                    echo '<a href="delete.php?id=' . $row['cart_id'] . '" class="btn btn-danger btn-remove">Remove from Cart</a>';
+                    echo '<form action="update.php" method="POST" style="display:inline-block;">';
                     echo '<input type="hidden" name="cart_id" value="' . $row['cart_id'] . '">';
-                    echo '<input type="number" name="quantity" value="' . $row['quantity'] . '" min="1" step="1" style="width: 70px; margin-right:20px;">';
-                    echo '<button type="submit" style="background-color: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">Update Quantity</button>';
+                    echo '<input type="number" name="quantity" value="' . $row['quantity'] . '" min="1" step="1" style="width: 50px; margin-right:10px; margin-left:20px;">';
+                    echo '<button type="submit" class="btn-update">Update Quantity</button>';
                     echo '</form>';
                     echo '</div>';
-
                 }
             } else {
                 echo "<p>Your cart is currently empty.</p>";

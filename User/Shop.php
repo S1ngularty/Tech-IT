@@ -71,6 +71,7 @@ include '../Administrator/includes/config.php';
 .nav-links {
     display: flex;
     gap: 20px;
+    font-size: 18px;
 }
 
 .nav-links li {
