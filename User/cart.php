@@ -137,12 +137,13 @@ $result = mysqli_query($conn, $sql_display);
                     echo '<p class="quantity">Quantity in Cart: ' . $row['quantity'] . '</p>';
                     echo '<p class="date-added">Added on: ' . date("F j, Y", strtotime($row['date_added'])) . '</p>';
                     echo '<p class="date-placed">Date Placed: ' . date("F j, Y", strtotime($row['date_placed'])) . '</p>';
-                 //   echo '<form action="delete.php" method="POST">';
-                  //  echo '<input type="hidden" name="cart_id" value="' . $row['cart_id'] . '">';
-                  echo '<a href="delete.php?id=' . $row['cart_id'] . '" class="btn btn-danger">Remove from Cart</a>';
-                  // echo '</form>';
+                    echo '<a href="delete.php?id=' . $row['cart_id'] . '" class="btn btn-danger">Remove from Cart</a>';
+                    echo '<form action="update.php" method="POST">';
+                    echo '<input type="hidden" name="cart_id" value="' . $row['cart_id'] . '">';
+                    echo '<input type="number" name="quantity" value="' . $row['quantity'] . '" min="1" step="1" style="width: 70px; margin-right:20px;">';
+                    echo '<button type="submit" style="background-color: #007bff; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer;">Update Quantity</button>';
+                    echo '</form>';
                     echo '</div>';
-//<button type='submit' class='btn btn-danger' name='delete' value='delete'><a href='delete.php?id={$row['category_id']}' style='color:#fff; text-decoration:none;'>Delete</a></button>
 
                 }
             } else {
