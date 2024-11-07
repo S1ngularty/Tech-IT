@@ -1,14 +1,23 @@
 <?php 
 include '../Administrator/includes/config.php'; // Database connection
+session_start(); // Start the session
+
 if (!isset($_SESSION['user_id'])) {
-    echo "Please log in to add products to your account.";
+    echo "Please log in to view your cart.";
     exit;
 }
-// Fetch products with cart details
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch products with cart details only for the logged-in user
 $sql_display = "SELECT p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id
                 FROM product p 
-                INNER JOIN cart c ON p.product_id = c.product_id";
-$result = mysqli_query($conn, $sql_display);
+                INNER JOIN cart c ON p.product_id = c.product_id
+                WHERE c.user_id = ?"; // Filter by user_id
+$stmt = mysqli_prepare($conn, $sql_display);
+mysqli_stmt_bind_param($stmt, 'i', $user_id); // Bind the user_id
+mysqli_stmt_execute($stmt);
+$result = mysqli_stmt_get_result($stmt);
 ?>
 <!DOCTYPE html>
 <html lang="en">

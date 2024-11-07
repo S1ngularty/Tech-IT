@@ -184,11 +184,10 @@ include '../Administrator/includes/config.php';
                 echo '<h5>' . $row['product_name'] . '</h5>';
                 echo '<p>' . $row['product_description'] . '</p>';
                 echo '<p class="price">$' . $row['price'] . '</p>';
-                
+
                 echo '<form action="store.php" method="POST">';
-                echo '<input type="hidden" name="user_id" value "' . 'user_id' . '">';
                 echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
-                echo '<input type="number" name="quantity" value="' . 'quantity' . '" min="1" step="1" style = "width: 70px; margin-right:20px;"';
+                echo '<input type="number" name="quantity" value="1" min="1" step="1" style="width: 70px; margin-right:20px;">';
                 echo '<input type="hidden" name="status" value="In Cart">';
                 
                 echo '<button type="submit">Add to Cart</button>';
@@ -202,6 +201,7 @@ include '../Administrator/includes/config.php';
         ?>
     </div>
 </div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
