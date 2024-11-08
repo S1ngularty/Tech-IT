@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 02:56 AM
+-- Generation Time: Nov 08, 2024 at 04:45 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,17 +29,14 @@ USE `techit`;
 -- Table structure for table `account`
 --
 
-CREATE TABLE IF NOT EXISTS `account` (
-  `account_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `account` (
+  `account_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `role` enum('admin','user') NOT NULL,
-  `profile_img` varchar(255) NOT NULL,
-  PRIMARY KEY (`account_id`),
-  UNIQUE KEY `username` (`username`),
-  KEY `user_fk` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `profile_img` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `account`
@@ -54,15 +51,27 @@ INSERT INTO `account` (`account_id`, `user_id`, `username`, `password`, `role`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `date_placed` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `category`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(100) NOT NULL,
-  PRIMARY KEY (`category_id`),
-  UNIQUE KEY `category_name` (`category_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `category` (
+  `category_id` int(11) NOT NULL,
+  `category_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `category`
@@ -80,17 +89,14 @@ INSERT INTO `category` (`category_id`, `category_name`) VALUES
 -- Table structure for table `orderline`
 --
 
-CREATE TABLE IF NOT EXISTS `orderline` (
-  `orderline_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `orderline` (
+  `orderline_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `unit_price` int(11) NOT NULL,
   `total_price` int(11) NOT NULL,
-  `created` datetime NOT NULL,
-  PRIMARY KEY (`orderline_id`),
-  KEY `order_fk` (`order_id`),
-  KEY `product_orderline_fk` (`product_id`)
+  `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -99,14 +105,12 @@ CREATE TABLE IF NOT EXISTS `orderline` (
 -- Table structure for table `orders`
 --
 
-CREATE TABLE IF NOT EXISTS `orders` (
-  `order_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `orders` (
+  `order_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `orderDate` datetime NOT NULL,
   `total_amount` int(11) NOT NULL,
-  `status` enum('pending','shipped') NOT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `user_order_fk` (`user_id`)
+  `status` enum('pending','shipped') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -115,17 +119,14 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Table structure for table `product`
 --
 
-CREATE TABLE IF NOT EXISTS `product` (
-  `product_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `product` (
+  `product_id` int(11) NOT NULL,
   `product_name` varchar(100) DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
   `product_description` text NOT NULL,
   `product_img` varchar(255) DEFAULT NULL,
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`product_id`),
-  UNIQUE KEY `product_name` (`product_name`,`product_img`),
-  UNIQUE KEY `product_img` (`product_img`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `date_added` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product`
@@ -144,11 +145,9 @@ INSERT INTO `product` (`product_id`, `product_name`, `price`, `product_descripti
 -- Table structure for table `product_category`
 --
 
-CREATE TABLE IF NOT EXISTS `product_category` (
+CREATE TABLE `product_category` (
   `category_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  KEY `category_fk` (`category_id`),
-  KEY `procat_fk` (`product_id`)
+  `product_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -168,16 +167,13 @@ INSERT INTO `product_category` (`category_id`, `product_id`) VALUES
 -- Table structure for table `review`
 --
 
-CREATE TABLE IF NOT EXISTS `review` (
-  `review_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `review` (
+  `review_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `comment` text NOT NULL,
   `create_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`review_id`),
-  KEY `review_user_fk` (`user_id`),
-  KEY `review_product_fk` (`product_id`)
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -186,10 +182,9 @@ CREATE TABLE IF NOT EXISTS `review` (
 -- Table structure for table `stocks`
 --
 
-CREATE TABLE IF NOT EXISTS `stocks` (
+CREATE TABLE `stocks` (
   `product_id` int(11) NOT NULL,
-  `stock` int(11) NOT NULL,
-  KEY `product_fk` (`product_id`)
+  `stock` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -209,16 +204,14 @@ INSERT INTO `stocks` (`product_id`, `stock`) VALUES
 -- Table structure for table `user`
 --
 
-CREATE TABLE IF NOT EXISTS `user` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `user` (
+  `user_id` int(11) NOT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(50) DEFAULT NULL,
   `age` tinyint(3) UNSIGNED DEFAULT NULL,
   `sex` enum('Male','Female') NOT NULL,
-  `contacts` bigint(20) NOT NULL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `contacts` (`contacts`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `contacts` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
@@ -232,6 +225,136 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `age`, `sex`, `contact
 (16, 'Cindy', 'Penaverde', 8, 'Female', 998767546);
 
 --
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `account`
+--
+ALTER TABLE `account`
+  ADD PRIMARY KEY (`account_id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD KEY `user_fk` (`user_id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `user_cart_fk` (`user_id`),
+  ADD KEY `product_cart_fk` (`product_id`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`category_id`),
+  ADD UNIQUE KEY `category_name` (`category_name`);
+
+--
+-- Indexes for table `orderline`
+--
+ALTER TABLE `orderline`
+  ADD PRIMARY KEY (`orderline_id`),
+  ADD KEY `order_fk` (`order_id`),
+  ADD KEY `product_orderline_fk` (`product_id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `user_order_fk` (`user_id`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`product_id`),
+  ADD UNIQUE KEY `product_name` (`product_name`,`product_img`),
+  ADD UNIQUE KEY `product_img` (`product_img`);
+
+--
+-- Indexes for table `product_category`
+--
+ALTER TABLE `product_category`
+  ADD KEY `category_fk` (`category_id`),
+  ADD KEY `procat_fk` (`product_id`);
+
+--
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `review_user_fk` (`user_id`),
+  ADD KEY `review_product_fk` (`product_id`);
+
+--
+-- Indexes for table `stocks`
+--
+ALTER TABLE `stocks`
+  ADD KEY `product_fk` (`product_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `contacts` (`contacts`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `account`
+--
+ALTER TABLE `account`
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `orderline`
+--
+ALTER TABLE `orderline`
+  MODIFY `orderline_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
 -- Constraints for dumped tables
 --
 
@@ -240,6 +363,13 @@ INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `age`, `sex`, `contact
 --
 ALTER TABLE `account`
   ADD CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `cart`
+--
+ALTER TABLE `cart`
+  ADD CONSTRAINT `product_cart_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_cart_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orderline`
