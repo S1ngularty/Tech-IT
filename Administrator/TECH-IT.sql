@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 04:45 AM
+-- Generation Time: Nov 08, 2024 at 01:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,8 +45,8 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`account_id`, `user_id`, `username`, `password`, `role`, `profile_img`) VALUES
 (3, 3, 'asher@example.com', '1d30ced9ec7b700e17e7cce7c6c0a6c2c46af29c', 'admin', '67241e8765ed14.94607411.jpg'),
 (6, 13, 'melvin@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin', '672c9f8853d5a3.40038007.png'),
-(7, 14, 'hans@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin', '672ca1871a2d68.59452921.jpg'),
-(9, 16, 'cindy@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'admin', '672d65cc88af96.16531056.png');
+(7, 14, 'hans@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', '672ca1871a2d68.59452921.jpg'),
+(9, 16, 'cindy@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', '672d65cc88af96.16531056.png');
 
 -- --------------------------------------------------------
 
@@ -56,11 +56,18 @@ INSERT INTO `account` (`account_id`, `user_id`, `username`, `password`, `role`, 
 
 CREATE TABLE `cart` (
   `cart_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `date_placed` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`cart_id`, `account_id`, `product_id`, `quantity`, `date_placed`) VALUES
+(6, 9, 5, 1, '2024-11-08 08:12:52');
 
 -- --------------------------------------------------------
 
@@ -241,8 +248,8 @@ ALTER TABLE `account`
 --
 ALTER TABLE `cart`
   ADD PRIMARY KEY (`cart_id`),
-  ADD KEY `user_cart_fk` (`user_id`),
-  ADD KEY `product_cart_fk` (`product_id`);
+  ADD KEY `product_cart_fk` (`product_id`),
+  ADD KEY `account_cart_fk` (`account_id`);
 
 --
 -- Indexes for table `category`
@@ -316,7 +323,7 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -334,7 +341,7 @@ ALTER TABLE `orderline`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -368,8 +375,8 @@ ALTER TABLE `account`
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `product_cart_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_cart_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `account_cart_fk` FOREIGN KEY (`account_id`) REFERENCES `account` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `product_cart_fk` FOREIGN KEY (`product_id`) REFERENCES `product` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `orderline`
