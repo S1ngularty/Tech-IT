@@ -1,5 +1,5 @@
 <?php 
-include '../Administrator/includes/config.php'; // Database connection
+include '../Administrator/includes/config.php';
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Fetch products for the logged-in user
 $sql_display = "SELECT p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id
                 FROM product p 
                 INNER JOIN cart c ON p.product_id = c.product_id

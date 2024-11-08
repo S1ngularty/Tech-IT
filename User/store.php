@@ -1,6 +1,5 @@
 <?php
 include '../Administrator/includes/config.php';
-session_start();
 
 if (!isset($_SESSION['user_id'])) {
     echo "Please log in to add products to your account.";
@@ -9,11 +8,10 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-if (isset($_POST['product_id'], $_POST['quantity'])) { // Fixed $_POST usage
+if (isset($_POST['product_id'], $_POST['quantity'])) {
     $product_id = $_POST['product_id'];
     $quantity = $_POST['quantity'];
 
-    // Start transaction
     mysqli_begin_transaction($conn);
 
     try {
