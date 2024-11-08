@@ -21,7 +21,7 @@ if (isset($_POST['product_id'], $_POST['quantity'])) {
             if (mysqli_stmt_execute($stmt4)) {
                 mysqli_commit($conn);
         echo "Product is added to your cart successfully.";
-        header("location:cart.php");
+        header("location:Shop.php");
         exit;
             }
       

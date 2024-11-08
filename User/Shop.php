@@ -203,7 +203,9 @@ include '../Administrator/includes/config.php';
     </div>
 </div>
 
-
+<!-- To be coded:
+ clicking the product container, the user will be redirected to the product.php
+ slim the product container a little -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
