@@ -15,21 +15,16 @@ if (isset($_POST['product_id'], $_POST['quantity'])) {
     mysqli_begin_transaction($conn);
 
     try {
-        $sql4 = "INSERT INTO cart (user_id, product_id, quantity, date_placed) VALUES (?,?,?,NOW())";
+        $sql4 = "INSERT INTO cart (account_id, product_id, quantity, date_placed) VALUES (?,?,?,NOW())";
         $stmt4 = mysqli_prepare($conn, $sql4);
-
-        if ($stmt4) {
             mysqli_stmt_bind_param($stmt4, 'iii', $user_id, $product_id, $quantity);
-            if (!mysqli_stmt_execute($stmt4)) {
-                throw new Exception("ERROR: Could not add order to user.");
-            }
-            mysqli_stmt_close($stmt4);
-        } else {
-            throw new Exception("ERROR: Could not prepare query for orders.");
-        }
-
-        mysqli_commit($conn);
+            if (mysqli_stmt_execute($stmt4)) {
+                mysqli_commit($conn);
         echo "Product is added to your cart successfully.";
+        header("location:cart.php");
+        exit;
+            }
+      
     } catch (Exception $e) {
         mysqli_rollback($conn);
         echo $e->getMessage();
