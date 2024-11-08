@@ -1,18 +1,15 @@
 <?php 
 include '../Administrator/includes/config.php';
-session_start();
 
-if (!isset($_SESSION['user_id'])) {
-    echo "Please log in to view your cart.";
-    exit;
-}
+if (isset($_SESSION['user_id'])) {
+    
 
-$user_id = $_SESSION['user_id'];
+echo $user_id = $_SESSION['user_id'];
 
-$sql_display = "SELECT p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id
+$sql_display = "SELECT  p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id
                 FROM product p 
                 INNER JOIN cart c ON p.product_id = c.product_id
-                WHERE c.user_id = ?";
+                WHERE c.account_id = ?";
 $stmt = mysqli_prepare($conn, $sql_display);
 mysqli_stmt_bind_param($stmt, 'i', $user_id);
 mysqli_stmt_execute($stmt);
@@ -181,9 +178,15 @@ $result = mysqli_stmt_get_result($stmt);
                     echo '</form>';
                     echo '</div>';
                 }
-            } else {
-                echo "<p>Your cart is currently empty.</p>";
             }
+             else {
+                echo "<p>Your cart is currently empty.</p>";
+                echo $user_id;
+            }
+        }else{
+            print "login first!";
+            exit;
+        }
             ?>
         </div>
     </div>
