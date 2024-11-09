@@ -1,5 +1,5 @@
 <?php
-include '../Administrator/includes/config.php';
+include '../../Administrator/includes/config.php';
 
 if (!isset($_SESSION['user_id'])) {
     echo "Please log in to add products to your account.";
@@ -21,7 +21,7 @@ if (isset($_POST['product_id'], $_POST['quantity'])) {
             if (mysqli_stmt_execute($stmt4)) {
                 mysqli_commit($conn);
         echo "Product is added to your cart successfully.";
-        header("location:Shop.php");
+        header("location:../Shop.php");
         exit;
             }
       

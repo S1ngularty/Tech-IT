@@ -1,5 +1,5 @@
 <?php 
-include "../Administrator/includes/config.php";
+include "../../Administrator/includes/config.php";
 if (!isset($_SESSION['user_id'])) {
     echo "Please log in to update products in your cart.";
     exit;

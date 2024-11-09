@@ -1,5 +1,5 @@
 <?php 
-include '../Administrator/includes/config.php';
+include '../../Administrator/includes/config.php';
 
 session_start();
 

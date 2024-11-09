@@ -1,5 +1,5 @@
 <?php 
-include '../Administrator/includes/config.php';
+include '../../administrator/includes/config.php';
 
 if (isset($_SESSION['user_id'])) {
     
@@ -58,16 +58,24 @@ $result = mysqli_stmt_get_result($stmt);
         .nav-links {
             display: flex;
             gap: 30px;
+            margin-bottom: 5px;
             font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-links li {
             list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .nav-links li a {
             color: #fff;
             text-decoration: none;
+
             /* font-weight: bold; */
         }
 
@@ -151,7 +159,7 @@ $result = mysqli_stmt_get_result($stmt);
         <div id="logo">Tech-IT</div>
         <ul class="nav-links">
             <li><a href="#">Profile</a></li>
-            <li><a href="http:/Tech-IT/customer/logout.php">Log out</a></li>
+            <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
         </ul>
     </nav>
 
@@ -163,7 +171,7 @@ $result = mysqli_stmt_get_result($stmt);
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     echo '<div class="product-card">';
-                    echo '<img src="../Administrator/Product/uploads/' . $row['product_img'] . '" alt="Product Image">';
+                    echo '<img src="../../Administrator/Product/uploads/' . $row['product_img'] . '" alt="Product Image">';
                     echo '<h5>' . $row['product_name'] . '</h5>';
                     echo '<p>' . $row['product_description'] . '</p>';
                     echo '<p class="price">Price: $' . $row['price'] . '</p>';

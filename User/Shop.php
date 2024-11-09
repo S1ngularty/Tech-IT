@@ -164,7 +164,7 @@ include '../Administrator/includes/config.php';
                 
                 </select>
             </form>
-            <a href="cart.php"> <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i> </a>
+            <a href="cart/cart.php"> <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i> </a>
             <div class="nav-links">
                 <li><a href="#">Profile</a></li>
                 <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
@@ -186,7 +186,7 @@ include '../Administrator/includes/config.php';
                 echo '<p>' . $row['product_description'] . '</p>';
                 echo '<p class="price">$' . $row['price'] . '</p>';
 
-                echo '<form action="store.php" method="POST">';
+                echo '<form action="cart/store.php" method="POST">';
                 echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
                 echo '<input type="number" name="quantity" value="1" min="1" step="1" style="width: 70px; margin-right:20px;">';
                 echo '<input type="hidden" name="status" value="In Cart">';
