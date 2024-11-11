@@ -190,10 +190,10 @@ include '../Administrator/includes/config.php';
                 echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
                 echo '<input type="number" name="quantity" value="1" min="1" step="1" style="width: 70px; margin-right:20px;">';
                 echo '<input type="hidden" name="status" value="In Cart">';
-                
                 echo '<button type="submit">Add to Cart</button>';
                 echo '</form>';
-                
+                echo '<a href="cart/product.php?product_id=' . $row['product_id'] . '">View Product</a>';
+
                 echo '</div>';
             }
         } else {
