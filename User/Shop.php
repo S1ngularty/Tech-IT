@@ -142,6 +142,8 @@ include '../Administrator/includes/config.php';
     background-color: #218838;
 }
 
+
+
 </style>
 <body>
     <!-- Header -->
@@ -202,6 +204,12 @@ include '../Administrator/includes/config.php';
         ?>
     </div>
 </div>
+<!-- Checkout Button -->
+<!-- <div class="checkout-button-container">
+    <form action="cart/checkout.php" method="POST">
+        <button type="submit" class="checkout-button">Checkout</button>
+    </form>
+</div> -->
 
 <!-- To be coded:
  clicking the product container, the user will be redirected to the product.php

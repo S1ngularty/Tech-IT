@@ -151,6 +151,25 @@ $result = mysqli_stmt_get_result($stmt);
         .product-card .btn-update:hover {
             background-color: #0056b3;
         }
+        .checkout-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.checkout-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.checkout-button:hover {
+    background-color: #218838;
+}
     </style>
 </head>
 <body>
@@ -198,6 +217,11 @@ $result = mysqli_stmt_get_result($stmt);
             ?>
         </div>
     </div>
+    <div class="checkout-button-container">
+    <form action="checkout.php" method="POST">
+        <button type="submit" class="checkout-button">Checkout</button>
+    </form>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
