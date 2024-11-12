@@ -176,7 +176,7 @@ include '../Administrator/includes/config.php';
     <div class="main-content">
     <div class="product-container">
         <?php 
-        $sql_display = "SELECT * FROM product";
+        $sql_display = "SELECT * FROM product inner join stocks using (product_id)";
         $result = mysqli_query($conn, $sql_display);
         if (mysqli_num_rows($result) > 0) {
             while ($row = mysqli_fetch_assoc($result)) {
@@ -188,7 +188,7 @@ include '../Administrator/includes/config.php';
 
                 echo '<form action="cart/store.php" method="POST">';
                 echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
-                echo '<input type="number" name="quantity" value="1" min="1" step="1" style="width: 70px; margin-right:20px;">';
+                echo '<input type="number" name="quantity" value="1" min="1" max="'.$row["stock"].'" step="1" style="width: 70px; margin-right:20px;">';
                 echo '<input type="hidden" name="status" value="In Cart">';
                 echo '<button type="submit">Add to Cart</button>';
                 echo '</form>';
