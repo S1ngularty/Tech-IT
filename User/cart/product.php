@@ -169,7 +169,7 @@ $product = mysqli_fetch_assoc($result);
     <div class="product-details">
         <h2 class="product-title"><?php echo $product['product_name']; ?></h2>
         <p class="product-price">$<?php echo $product['price']; ?></p>
-        <!-- <p class="product-stock">Stock available: <?php// echo $product['stock']; ?></p> -->
+        <!-- <p class="product-stock">Stock available: <?php // echo $product['stock']; ?></p> -->
         <p class="product-description"><?php echo $product['product_description']; ?></p>
         
         <!-- Quantity Control -->
