@@ -18,7 +18,6 @@ $result=mysqli_query($conn,$sql);
 //   exit;
 // }
 
-
 if(mysqli_affected_rows($conn)>0){
     print "<body> <div class='container'> <div class='table_div'>
   <table width='50%' cellpadding='6' class='table'>
@@ -30,6 +29,8 @@ if(mysqli_affected_rows($conn)>0){
     <th>Action</th>
     </tr>";
     while($row= mysqli_fetch_assoc($result)){
+      $color=($row['account_status']!='activate')? 'btn btn-success' : 'btn btn-danger';
+      $status=($row['account_status']!='activate')? 'activate' : 'deativate';
 print "<tr>
 <td>{$row['account_id']}</td>
 <td>{$row['first_name']} &nbsp {$row['last_name']}</td>
@@ -37,7 +38,9 @@ print "<tr>
 <td><form action='update.php?ID={$row['account_id']}' method='post'><input type='radio' ".($row['role']=='admin'? 'checked' : '')." name='role' value='admin' onclick='this.form.submit()'><label class=='form-control'>Admin</label>
 <input type='radio'  name='role' value='user'".($row['role']=='user'? 'checked' : '')." onclick='this.form.submit()'  ><label class=='form-control'>User</label></form></td>
 <td><button type='submit' name='edit' value='edit' class='btn btn-primary'><a href='edit.php?id={$row['user_id']}' style='color:white; text-decoration:none;'>Edit</a></button>
-<button type='submit' name='delete' value='delete' class='btn btn-danger' ><a href='delete.php?id={$row['user_id']}' style='color:white; text-decoration:none;'>Delete</a></button></td>
+<button type='submit' name='delete' value='delete' class='btn btn-danger' ><a href='delete.php?id={$row['user_id']}' style='color:white; text-decoration:none;'>Delete</a></button>
+<button type='submit' name='stat' value='edit' class='$color'><a href='update.php?id={$row['account_id']}&stat=$status' style='color:white; text-decoration:none;' >$status</a></button>
+</td>
 <input type ='hidden' name='IDs[]' value='{$row['account_id']}'></tr>";
 
     }
@@ -46,16 +49,16 @@ print "<tr>
 ?>
 <style>
       body .container{
-   grid-area: 2/5/7/15;
+   grid-area: 2/3/7/16;
    display: grid;
    gap: 10px;
    padding: 0%;
-grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+grid-template-columns: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px  100px 100px 100px 100px 100px;
 grid-template-rows: 100px 100px 100px 100px 100px 50px;
       }
 
       .table_div{
-        grid-area: 2/1/5/9;
+        grid-area: 2/2/5/13;
       }
 
       tr{

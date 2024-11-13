@@ -190,7 +190,7 @@ $product = mysqli_fetch_assoc($result);
         <!-- Sample Review Item -->
         <div class="review-item">
             <div class="review-rating">
-                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i> 
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>

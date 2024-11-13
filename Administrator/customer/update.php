@@ -15,6 +15,20 @@ if(isset($_POST['role'])){
     }
 }
 
+if(isset($_POST['stat'])){
+  echo  $stat=$_GET['stat'];
+   echo  $stat_id=$_GET['id'];
+    $status="UPDATE account SET account_status=? where account_id=?";
+    $stmt5=mysqli_prepare($conn,$status);
+    mysqli_stmt_bind_param($stmt5,'si',$stat,$stat_id);
+    if(mysqli_stmt_execute($stmt5)){
+        header("location: index.php");
+        exit;
+    }else{
+        print "failed";
+    }
+}
+
 
 if(isset($_POST['update'])){
     echo $_FILES['file']['error'];
