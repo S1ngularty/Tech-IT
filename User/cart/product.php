@@ -1,5 +1,7 @@
 <?php
 include '../../Administrator/includes/config.php';
+
+// Check if product_id exists
 if (isset($_GET['product_id'])) {
     $product_id = (int)$_GET['product_id'];
 } else {
@@ -7,10 +9,10 @@ if (isset($_GET['product_id'])) {
     exit;
 }
 
-
- 
-$sql_display = "SELECT product_id, product_name, price, product_description, product_img, date_added , s.stock
-                FROM product inner join stocks s using(product_id)
+// Retrieve product details
+$sql_display = "SELECT product_id, product_name, price, product_description, product_img, s.stock 
+                FROM product 
+                INNER JOIN stocks s USING(product_id) 
                 WHERE product_id = $product_id";
 $result = mysqli_query($conn, $sql_display);
 $product = mysqli_fetch_assoc($result);
@@ -162,47 +164,43 @@ $product = mysqli_fetch_assoc($result);
 </style>
 <body>
 <div class="product-interface">
-    <!-- Product Image -->
-  <form action="store.php" method="post" enctype="multipart/form-data">
-  <img src="../../Administrator/Product/uploads/<?php echo $product['product_img']; ?>" alt="<?php echo $product['product_name']; ?>">
+    <form action="../User/review/store.php" method="post">
+        <img src="../../Administrator/Product/uploads/<?php echo $product['product_img']; ?>" alt="<?php echo $product['product_name']; ?>">
+        <div class="product-details">
+            <h2><?php echo $product['product_name']; ?></h2>
+            <p>$<?php echo $product['price']; ?></p>
+            <p><?php echo $product['product_description']; ?></p>
 
-<!-- Product Details -->
-<div class="product-details">
-    <h2 class="product-title"><?php echo $product['product_name']; ?></h2>
-    <p class="product-price">$<?php echo $product['price']; ?></p>
-    <!-- <p class="product-stock">Stock available: <?php // echo $product['stock']; ?></p> -->
-    <p class="product-description"><?php echo $product['product_description']; ?></p>
-    
-    <!-- Quantity Control -->
-<div class="product-controls">
-<input type="hidden" name="product_id" value="<?php echo $product['product_id'];  ?>">
-<input type="number" name="quantity" value="1" min="1" max="<?php echo $product['stock']; ?>" step="1" style="width: 50px; margin-right:10px;">
-<button class="add-to-cart" name="add" type="submit">Add to Cart</button>
-<button class="checkout">Checkout</button>
-</div>
-  </form>
-
+            <!-- Quantity Control -->
+            <div class="product-controls">
+                <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+                <input type="number" name="quantity" value="1" min="1" max="<?php echo $product['stock']; ?>" style="width: 50px; margin-right:10px;">
+                <button class="add-to-cart" name="add" type="submit">Add to Cart</button>
+                <button class="checkout">Checkout</button>
+            </div>
+        </div>
+    </form>
 
     <!-- Review Section -->
     <div class="review-section">
-        <h3 class="review-title">Customer Reviews</h3>
+        <h3>Customer Reviews</h3>
 
-        <!-- Sample Review Item -->
+        <!-- Sample Review -->
         <div class="review-item">
             <div class="review-rating">
-                <i class="fas fa-star"></i> 
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>
-                <i class="far fa-star"></i> <!-- Example Rating: 4 out of 5 -->
+                <i class="fas fa-star"></i>
+                <i class="far fa-star"></i>
             </div>
             <p class="review-text">"Great product! Quality is amazing."</p>
         </div>
 
-        <!-- Leave a Review -->
-        <div class="leave-review">
-            <h4>Leave a Review</h4>
-            <form action="submit_review.php" method="POST">
+        <!-- Conditional Review Form -->
+        <?php if ($_SESSION['user_id']) : ?>
+            <form action="../review/store.php" method="POST">
+                <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                 <div class="rating-input">
                     <label for="rating">Rating:</label>
                     <select name="rating" id="rating" required>
@@ -214,13 +212,16 @@ $product = mysqli_fetch_assoc($result);
                     </select>
                 </div>
                 <div class="rating-input">
-                    <label for="review_text">Your Review:</label>
-                    <textarea name="review_text" id="review_text" rows="3" required></textarea>
+                    <label for="comment">Your Review:</label>
+                    <textarea name="comment" id="comment" rows="3" required></textarea>
                 </div>
                 <button type="submit" class="rating-submit">Submit Review</button>
             </form>
-        </div>
+        <?php else : ?>
+            <p>Please log in to leave a review.</p>
+        <?php endif; ?>
     </div>
 </div>
+
 </body>
 </html>
