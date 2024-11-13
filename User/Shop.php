@@ -141,38 +141,57 @@ include '../Administrator/includes/config.php';
 .product-card button:hover {
     background-color: #218838;
 }
+/* Icon group styling */
+.icon-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 
 
 
 </style>
 <body>
-    <!-- Header -->
-    <nav id="navbar">
-        <ul>
-            <li id="logo"><strong>Tech-IT</strong></li>
-            <form action="" class="search-form">
-                <input type="text" placeholder="Search...">
-                <button type="submit">
-                    <i class="fas fa-magnifying-glass"></i>
-                </button>
-                <select class="category-dropdown">
-                <?php 
-                $sql1= 'SELECT * FROM category';
-                $result=mysqli_query($conn, $sql1);
-                while($row=mysqli_fetch_assoc($result)){
-                    print "<option value='{$row['category_id']}'> {$row['category_name']} </option>";
-                }
-                ?>    
-                
-                </select>
-            </form>
-            <a href="cart/cart.php"> <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i> </a>
-            <div class="nav-links">
-                <li><a href="#">Profile</a></li>
-                <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
-            </div>
-        </ul>
-    </nav>
+   <!-- Header -->
+<!-- Header -->
+<nav id="navbar">
+    <ul>
+        <li id="logo"><strong>Tech-IT</strong></li>
+        <form action="" class="search-form">
+            <input type="text" placeholder="Search...">
+            <button type="submit">
+                <i class="fas fa-magnifying-glass"></i>
+            </button>
+            <select class="category-dropdown">
+            <?php 
+            $sql1= 'SELECT * FROM category';
+            $result=mysqli_query($conn, $sql1);
+            while($row=mysqli_fetch_assoc($result)){
+                print "<option value='{$row['category_id']}'> {$row['category_name']} </option>";
+            }
+            ?>    
+            </select>
+        </form>
+        
+        <!-- Shopping and Notification Icons -->
+        <div class="icon-group">
+            <a href="Shop.php">
+                <i class="fas fa-shopping-bag" style="color:#fff; margin-right:15px;"></i>
+            </a>
+            <a href="#">
+                <i class="fas fa-bell" style="color:#fff; margin-right:15px;"></i>
+            </a>
+            <a href="cart/cart.php">
+                <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i>
+            </a>
+        </div>
+        
+        <div class="nav-links">
+            <li><a href="#">Profile</a></li>
+            <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
+        </div>
+    </ul>
+</nav>
 
     <!-- Main Content -->
     <div class="main-content">

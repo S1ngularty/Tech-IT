@@ -1,5 +1,4 @@
 <?php 
-session_start();
 include '../../Administrator/includes/config.php';
 
 // Check if user is logged in

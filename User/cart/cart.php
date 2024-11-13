@@ -170,17 +170,33 @@ $result = mysqli_stmt_get_result($stmt);
 .checkout-button:hover {
     background-color: #218838;
 }
+/* Icon group styling */
+.icon-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: auto;
+}
+
     </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav id="navbar">
-        <div id="logo">Tech-IT</div>
-        <ul class="nav-links">
-            <li><a href="#">Profile</a></li>
-            <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
-        </ul>
-    </nav>
+   <!-- Navbar -->
+<nav id="navbar">
+    <div id="logo">Tech-IT</div>
+    <div class="icon-group">
+        <a href="../Shop.php">
+            <i class="fas fa-shopping-bag" style="color:#fff; margin-right:15px;"></i>
+        </a>
+        <a href="cart.php">
+            <i class="fas fa-cart-shopping" style="color:#fff; margin-right:15px;"></i>
+        </a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Profile</a></li>
+        <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
+    </ul>
+</nav>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -208,7 +224,7 @@ $result = mysqli_stmt_get_result($stmt);
             }
              else {
                 echo "<p>Your cart is currently empty.</p>";
-                echo $user_id;
+                //echo $user_id;
             }
         }else{
             print "login first!";
