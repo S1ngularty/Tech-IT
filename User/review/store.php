@@ -58,7 +58,7 @@ try {
             if (mysqli_stmt_execute($stmt_insert)) {
                 echo "Review submitted successfully.";
                 mysqli_commit($conn);
-              //  header("location:../cart/product.php");
+             // header("location:../../User/cart/product.php");
             } else {
                 echo "Error submitting review: " . mysqli_stmt_error($stmt_insert);
                 mysqli_rollback($conn);

@@ -18,7 +18,7 @@ $result = mysqli_query($conn, $sql_display);
 $product = mysqli_fetch_assoc($result);
 
 // Fetch reviews for the product
-$sql_reviews = "SELECT r.rating, r.comment, a.username, r.create_at 
+$sql_reviews = "SELECT r.review_id, r.rating, r.comment, a.username, r.create_at, r.account_id 
                 FROM review r
                 INNER JOIN account a ON r.account_id = a.account_id
                 WHERE r.product_id = ?
@@ -31,6 +31,9 @@ if ($stmt_reviews) {
     mysqli_stmt_execute($stmt_reviews);
     $reviews_result = mysqli_stmt_get_result($stmt_reviews);
 }
+
+// Check if user is logged in
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 ?>
 
 <!DOCTYPE html>
@@ -141,6 +144,8 @@ if ($stmt_reviews) {
         .review-item {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
         }
 
         .review-rating i {
@@ -165,6 +170,23 @@ if ($stmt_reviews) {
 
         .rating-submit:hover {
             background-color: #218838;
+        }
+
+        .edit-icon {
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        .edit-form {
+            margin-top: 20px;
+        }
+
+        .edit-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -200,6 +222,27 @@ if ($stmt_reviews) {
                     </div>
                     <p class="review-text">"<?php echo htmlspecialchars($review['comment']); ?>"</p>
                     <small class="review-meta">- <?php echo htmlspecialchars($review['username']); ?> on <?php echo date("F j, Y", strtotime($review['create_at'])); ?></small>
+
+                    <!-- Display pencil icon if the logged-in user is the author -->
+                    <?php if ($user_id && $user_id == $review['account_id']) : ?>
+                        <span class="edit-icon">
+                            <form method="post" action="">
+                                <input type="hidden" name="edit_review_id" value="<?php echo $review['review_id']; ?>">
+                                <button type="submit" style="background:none;border:none;color:#007bff;">&#9998;</button>
+                            </form>
+                        </span>
+                        
+                        <!-- Review edit form (hidden by default) -->
+                        <?php
+                        if (isset($_POST['edit_review_id']) && $_POST['edit_review_id'] == $review['review_id']) {
+                            echo '<form action="../review/update.php" method="post" class="edit-form">
+                                <input type="hidden" name="review_id" value="' . $review['review_id'] . '">
+                                <textarea name="updated_comment" rows="4" required>' . htmlspecialchars($review['comment']) . '</textarea>
+                                <button type="submit" class="rating-submit">Update Review</button>
+                            </form>';
+                        }
+                        ?>
+                    <?php endif; ?>
                 </div>
             <?php endwhile; ?>
         <?php else : ?>
@@ -209,11 +252,10 @@ if ($stmt_reviews) {
         <!-- Review submission form -->
         <h4>Submit Your Review</h4>
         <form action="../review/store.php" method="post">
-        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
-            <div class="rating-input">
+            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
+            <div>
                 <label for="rating">Rating:</label>
                 <select name="rating" id="rating" required>
-                    <option value="">-- Select --</option>
                     <option value="1">1 Star</option>
                     <option value="2">2 Stars</option>
                     <option value="3">3 Stars</option>
@@ -221,9 +263,9 @@ if ($stmt_reviews) {
                     <option value="5">5 Stars</option>
                 </select>
             </div>
-            <div class="rating-input">
+            <div>
                 <label for="comment">Comment:</label>
-                <textarea name="comment" id="comment" rows="3" placeholder="Write your review here..." required></textarea>
+                <textarea name="comment" id="comment" rows="4" required></textarea>
             </div>
             <button type="submit" class="rating-submit">Submit Review</button>
         </form>
