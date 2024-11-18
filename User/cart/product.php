@@ -237,8 +237,17 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                         if (isset($_POST['edit_review_id']) && $_POST['edit_review_id'] == $review['review_id']) {
                             echo '<form action="../review/update.php" method="post" class="edit-form">
                                 <input type="hidden" name="review_id" value="' . $review['review_id'] . '">
-                                <textarea name="updated_comment" rows="4" required>' . htmlspecialchars($review['comment']) . '</textarea>
-                                <button type="submit" class="rating-submit">Update Review</button>
+                                <input type= "hidden" name="product_id" value="' . $product['product_id'].'">
+                                <label for="rating">Rating:</label>
+                                    <select name="rating" id="rating" required>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="5">5 Stars</option>
+                                    </select>
+                                <textarea name="comment" rows="4" required>' . htmlspecialchars($review['comment']) . '</textarea>
+                                <button type="submit" class="rating-submit" name="update_btn" value="update_click">Update Review</button>
                             </form>';
                         }
                         ?>

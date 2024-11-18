@@ -30,7 +30,7 @@ if(mysqli_affected_rows($conn)>0){
     </tr>";
     while($row= mysqli_fetch_assoc($result)){
       $color=($row['account_status']!='activate')? 'btn btn-success' : 'btn btn-danger';
-      $status=($row['account_status']!='activate')? 'activate' : 'deativate';
+      $status=($row['account_status']!='activate')? 'activate' : 'deactivate';
 print "<tr>
 <td>{$row['account_id']}</td>
 <td>{$row['first_name']} &nbsp {$row['last_name']}</td>

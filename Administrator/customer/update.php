@@ -15,7 +15,7 @@ if(isset($_POST['role'])){
     }
 }
 
-if(isset($_POST['stat'])){
+if(isset($_GET['stat'])){
   echo  $stat=$_GET['stat'];
    echo  $stat_id=$_GET['id'];
     $status="UPDATE account SET account_status=? where account_id=?";
