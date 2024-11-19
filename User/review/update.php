@@ -11,7 +11,6 @@ $review_id = isset($_POST['review_id']) ? (int) $_POST['review_id'] : 0;
 $product_id = isset($_POST['product_id']) ? (int) $_POST['product_id'] : 0;
 echo $rating = isset($_POST['rating']) ? (int) $_POST['rating'] : 0;
 $comment = isset($_POST['comment']) ? $_POST['comment'] : '';
-
 // Ensure the review exists and belongs to the user
 $sql_check = "SELECT * FROM review WHERE review_id = ? AND account_id = ?";
 $stmt_check = mysqli_prepare($conn, $sql_check);
@@ -33,7 +32,7 @@ mysqli_stmt_execute($stmt_update);
 
 if (mysqli_stmt_affected_rows($stmt_update) > 0) {
     echo "Review updated successfully!";
-    header("location: http:/Tech-IT/User/cart/product.php");
+    header("location: http:/Tech-IT/User/cart/product.php?product_id=$product_id");
     exit();
 } else {
     echo "Failed to update the review.";

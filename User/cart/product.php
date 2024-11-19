@@ -42,6 +42,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $product['product_name']; ?> - Tech-IT</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         /* Product Interface */
         .product-interface {
@@ -144,8 +145,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         .review-item {
             border-bottom: 1px solid #ddd;
             padding: 10px 0;
-            display: flex;
-            justify-content: space-between;
+            position: relative;
         }
 
         .review-rating i {
@@ -156,6 +156,36 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             font-size: 14px;
             color: #555;
             margin-top: 5px;
+        }
+
+        .review-meta {
+            font-size: 12px;
+            color: #888;
+            text-align: right;
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+        }
+
+        .edit-icon {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+            color: #007bff;
+        }
+
+        .edit-form {
+            margin-top: 20px;
+            display: none;
+        }
+
+        .edit-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
         }
 
         .rating-submit {
@@ -172,22 +202,47 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             background-color: #218838;
         }
 
-        .edit-icon {
-            cursor: pointer;
-            color: #007bff;
+        /* New Review Form Styles */
+        .new-review-form {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
         }
 
-        .edit-form {
-            margin-top: 20px;
-        }
-
-        .edit-form textarea {
+        .new-review-form textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 14px;
+            height: 100px;
+            margin-bottom: 15px;
         }
+
+        .new-review-form select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .submit-review-btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .submit-review-btn:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
@@ -221,64 +276,61 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                         <?php endfor; ?>
                     </div>
                     <p class="review-text">"<?php echo htmlspecialchars($review['comment']); ?>"</p>
+
+                    <!-- Author and Date at the bottom -->
                     <small class="review-meta">- <?php echo htmlspecialchars($review['username']); ?> on <?php echo date("F j, Y", strtotime($review['create_at'])); ?></small>
 
                     <!-- Display pencil icon if the logged-in user is the author -->
                     <?php if ($user_id && $user_id == $review['account_id']) : ?>
-                        <span class="edit-icon">
-                            <form method="post" action="">
-                                <input type="hidden" name="edit_review_id" value="<?php echo $review['review_id']; ?>">
-                                <button type="submit" style="background:none;border:none;color:#007bff;">&#9998;</button>
+                        <span class="edit-icon" onclick="toggleEditForm(<?php echo $review['review_id']; ?>)">&#9998;</span>
+                        <div class="edit-form" id="edit-form-<?php echo $review['review_id']; ?>">
+                            <form action="../User/review/update.php" method="post">
+                                <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
+                                <textarea name="comment"><?php echo htmlspecialchars($review['comment']); ?></textarea>
+                                <select name="rating">
+                                    <option value="1" <?php echo $review['rating'] == 1 ? 'selected' : ''; ?>>1 Star</option>
+                                    <option value="2" <?php echo $review['rating'] == 2 ? 'selected' : ''; ?>>2 Stars</option>
+                                    <option value="3" <?php echo $review['rating'] == 3 ? 'selected' : ''; ?>>3 Stars</option>
+                                    <option value="4" <?php echo $review['rating'] == 4 ? 'selected' : ''; ?>>4 Stars</option>
+                                    <option value="5" <?php echo $review['rating'] == 5 ? 'selected' : ''; ?>>5 Stars</option>
+                                </select>
+                                <button type="submit" class="rating-submit">Update Review</button>
                             </form>
-                        </span>
-                        
-                        <!-- Review edit form (hidden by default) -->
-                        <?php
-                        if (isset($_POST['edit_review_id']) && $_POST['edit_review_id'] == $review['review_id']) {
-                            echo '<form action="../review/update.php" method="post" class="edit-form">
-                                <input type="hidden" name="review_id" value="' . $review['review_id'] . '">
-                                <input type= "hidden" name="product_id" value="' . $product['product_id'].'">
-                                <label for="rating">Rating:</label>
-                                    <select name="rating" id="rating" required>
-                                    <option value="1">1 Star</option>
-                                    <option value="2">2 Stars</option>
-                                    <option value="3">3 Stars</option>
-                                    <option value="4">4 Stars</option>
-                                    <option value="5">5 Stars</option>
-                                    </select>
-                                <textarea name="comment" rows="4" required>' . htmlspecialchars($review['comment']) . '</textarea>
-                                <button type="submit" class="rating-submit" name="update_btn" value="update_click">Update Review</button>
-                            </form>';
-                        }
-                        ?>
+                        </div>
                     <?php endif; ?>
                 </div>
             <?php endwhile; ?>
         <?php else : ?>
-            <p>No reviews yet. Be the first to review this product!</p>
+            <p>No reviews yet for this product.</p>
         <?php endif; ?>
+    </div>
 
-        <!-- Review submission form -->
-        <h4>Submit Your Review</h4>
-        <form action="../review/store.php" method="post">
-            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
-            <div>
-                <label for="rating">Rating:</label>
-                <select name="rating" id="rating" required>
-                    <option value="1">1 Star</option>
-                    <option value="2">2 Stars</option>
-                    <option value="3">3 Stars</option>
-                    <option value="4">4 Stars</option>
-                    <option value="5">5 Stars</option>
-                </select>
-            </div>
-            <div>
-                <label for="comment">Comment:</label>
-                <textarea name="comment" id="comment" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="rating-submit">Submit Review</button>
-        </form>
+    <!-- New Review Section -->
+    <div class="new-review-form">
+        <h4>Submit a Review</h4>
+        <textarea name="comment" required placeholder="Write your review..."></textarea>
+        <select name="rating" required>
+            <option value="" disabled selected>Select Rating</option>
+            <option value="1">1 Star</option>
+            <option value="2">2 Stars</option>
+            <option value="3">3 Stars</option>
+            <option value="4">4 Stars</option>
+            <option value="5">5 Stars</option>
+        </select>
+        <button type="submit" class="submit-review-btn">Submit Review</button>
     </div>
 </div>
+
+<script>
+    function toggleEditForm(reviewId) {
+        const editForm = document.getElementById('edit-form-' + reviewId);
+        if (editForm.style.display === "none" || editForm.style.display === "") {
+            editForm.style.display = "block";
+        } else {
+            editForm.style.display = "none";
+        }
+    }
+</script>
+
 </body>
 </html>

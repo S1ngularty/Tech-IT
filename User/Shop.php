@@ -178,7 +178,7 @@ include '../Administrator/includes/config.php';
             <a href="Shop.php">
                 <i class="fas fa-shopping-bag" style="color:#fff; margin-right:15px;"></i>
             </a>
-            <a href="#">
+            <a href="notification.php">
                 <i class="fas fa-bell" style="color:#fff; margin-right:15px;"></i>
             </a>
             <a href="cart/cart.php">
