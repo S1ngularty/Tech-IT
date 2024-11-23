@@ -101,9 +101,9 @@ if(isset($_POST['update'])){
                  throw new Exception("invalid image format");
              }
            }else{
-            $sql3="UPDATE account SET username=?, password=? where user_id=?";
+            $sql3="UPDATE account SET username=? where user_id=?";
             $stmt3=mysqli_prepare($conn,$sql3);
-            mysqli_stmt_bind_param($stmt3,'ssi',$username,$password,$_SESSION['update_id']);
+            mysqli_stmt_bind_param($stmt3,'si',$username,$_SESSION['update_id']);
             mysqli_stmt_execute($stmt3);
             if(mysqli_stmt_affected_rows($stmt3)>=0){
                 mysqli_commit($conn);
