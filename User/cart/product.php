@@ -252,7 +252,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 </head>
 <body>
 <div class="product-interface">
-    <form action="../User/review/store.php" method="post">
+    <form action="../review/store.php" method="post">
         <img src="../../Administrator/Product/uploads/<?php echo $product['product_img']; ?>" alt="<?php echo $product['product_name']; ?>">
         <div class="product-details">
             <h2 class="product-title"><?php echo $product['product_name']; ?></h2>
@@ -261,8 +261,8 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             <div class="product-controls">
                 <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
                 <input type="number" name="quantity" value="1" min="1" max="<?php echo $product['stock']; ?>">
-                <button class="add-to-cart" name="add" type="submit">Add to Cart</button>
-                <button class="checkout">Checkout</button>
+                <button class="add-to-cart" name="add" type="submit", formaction="store.php">Add to Cart</button>
+               
             </div>
         </div>
     </form>
@@ -287,9 +287,9 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
                     <!-- Display pencil icon if the logged-in user is the author -->
                     <?php if ($user_id && $user_id == $review['account_id']) : ?>
-                        <span class="edit-icon" onclick="toggleEditForm(<?php echo $review['review_id']; ?>)">&#9998;</span>
+                        <span class="edit-icon" onclick="document.getElementById('edit-form-<?php echo $review['review_id']; ?>').style.display = 'block';">&#9998;</span>
                         <div class="edit-form" id="edit-form-<?php echo $review['review_id']; ?>">
-                            <form action="../User/review/update.php" method="post">
+                            <form action="../review/update.php" method="post">
                                 <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
                                 <textarea name="comment"><?php echo htmlspecialchars($review['comment']); ?></textarea>
                                 <select name="rating">
@@ -312,7 +312,8 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
     <!-- New Review Section -->
     <div class="new-review-form">
-        <h4>Submit a Review</h4>
+    <h4>Submit a Review</h4>
+    <form action="../review/store.php" method="post">
         <textarea name="comment" required placeholder="Write your review..."></textarea>
         <select name="rating" required>
             <option value="" disabled selected>Select Rating</option>
@@ -322,20 +323,11 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             <option value="4">4 Stars</option>
             <option value="5">5 Stars</option>
         </select>
+        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>">
         <button type="submit" class="submit-review-btn">Submit Review</button>
-    </div>
+    </form>
 </div>
 
-<!-- <script>
-    function toggleEditForm(reviewId) {
-        const editForm = document.getElementById('edit-form-' + reviewId);
-        if (editForm.style.display === "none" || editForm.style.display === "") {
-            editForm.style.display = "block";
-        } else {
-            editForm.style.display = "none";
-        }
-    }
-</script> -->
 
 </body>
 </html>

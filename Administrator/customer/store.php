@@ -20,7 +20,7 @@ print "</pre>";
 if (
     preg_match("/^[a-zA-Z\s]+$/", $fname) && preg_match("/^[a-zA-Z\s]+$/", $lname) &&
     ($age >= 12 && $age <= 120) && preg_match("/^\d{11}$/", $contact) &&
-    preg_match("/^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/", $username) &&
+    preg_match("/^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{3,}$/", $username) &&
     preg_match("/[A-Za-z0-9%_\-\\@()]{8,30}/", $password1)
 ){
      $password=trim(sha1($_POST['password']));
