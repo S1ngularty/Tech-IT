@@ -193,7 +193,7 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
         </div>
         
         <div class="nav-links">
-            <li><a href="#">Profile</a></li>
+            <li><a href="profile/edit.php">Profile</a></li>
             <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
         </div>
     </ul>

@@ -326,7 +326,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     </div>
 </div>
 
-<script>
+<!-- <script>
     function toggleEditForm(reviewId) {
         const editForm = document.getElementById('edit-form-' + reviewId);
         if (editForm.style.display === "none" || editForm.style.display === "") {
@@ -335,7 +335,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             editForm.style.display = "none";
         }
     }
-</script>
+</script> -->
 
 </body>
 </html>
