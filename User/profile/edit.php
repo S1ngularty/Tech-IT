@@ -151,6 +151,7 @@ select {
             <div class="div3">
                 <img src="../../administrator/customer/uploads/<?php echo $row['profile_img'] ?>" alt="Profile Image">
                 <input type="hidden" name="current" value="<?php echo $row['profile_img'] ?>">
+                <input type="hidden" name="user_id" value="<?php echo $row['user_id'] ?>">
                 <div class="profile">
                     <label for="file" class="form-label">Profile Image</label>
                     <input type="file" name="file" class="form-control">
@@ -184,7 +185,7 @@ select {
                 </div>
                 <div class="contact">
                     <label for="contact" class="form-label">Contacts</label>
-                    <input type="tel" name="contact" value="<?php echo $row['contacts']?>" class="form-control" required>
+                    <input type="text" name="contact" value="<?php echo $row['contacts']?>" class="form-control" required>
                 </div>
                 <!-- Change Password Inputs -->
                 <div class="password">

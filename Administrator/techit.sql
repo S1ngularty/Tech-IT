@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2024 at 10:32 AM
+-- Generation Time: Nov 24, 2024 at 08:46 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,12 +44,10 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`account_id`, `user_id`, `username`, `password`, `role`, `profile_img`, `account_status`) VALUES
-(7, 14, 'hans@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', '672ca1871a2d68.59452921.jpg', 'activate'),
-(9, 16, 'cindy@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', '672d65cc88af96.16531056.png', 'activate'),
 (10, 17, 'Arthur@gmail.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', '672e0509748a74.92074139.png', 'activate'),
 (12, 19, 'kim@example.com', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'user', '67345043bbf208.78801629.png', 'deactivate'),
-(14, 21, 'haydie@example.com', 'cd9301083ac806091b2e643dc046a1e8a5b11135', 'admin', '6740a6465fd7a6.28794989.jpg', 'activate'),
-(16, 23, 'asher@example.com', '1d30ced9ec7b700e17e7cce7c6c0a6c2c46af29c', 'admin', '6741a0bd002a79.66010064.jpg', 'activate');
+(21, 30, 'asher@example.com', '1d30ced9ec7b700e17e7cce7c6c0a6c2c46af29c', 'admin', '6742d58338ac56.89428640.jpg', 'activate'),
+(22, 31, 'ego@example.com', '8ee7bd92db2d4239c746a393ab1b3dc706c5a44f', 'user', '6742d849b60f43.50373053.jpg', 'activate');
 
 -- --------------------------------------------------------
 
@@ -72,8 +70,7 @@ CREATE TABLE `cart` (
 INSERT INTO `cart` (`cart_id`, `account_id`, `product_id`, `quantity`, `date_placed`) VALUES
 (32, 10, 4, 1, '2024-11-18 13:36:12'),
 (33, 10, 5, 1, '2024-11-18 13:36:14'),
-(34, 10, 7, 1, '2024-11-18 13:36:15'),
-(35, 9, 8, 1, '2024-11-22 04:51:20');
+(34, 10, 7, 1, '2024-11-18 13:36:15');
 
 -- --------------------------------------------------------
 
@@ -129,8 +126,7 @@ INSERT INTO `orderline` (`orderline_id`, `order_id`, `product_id`, `quantity`, `
 (14, 12, 4, 1, 9000, 0, '0000-00-00 00:00:00'),
 (15, 13, 4, 1, 9000, 0, '0000-00-00 00:00:00'),
 (16, 14, 5, 1, 5000, 0, '0000-00-00 00:00:00'),
-(17, 15, 5, 1, 5000, 0, '0000-00-00 00:00:00'),
-(18, 16, 5, 1, 5000, 5000, '2024-11-22 12:49:07');
+(17, 15, 5, 1, 5000, 0, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -161,8 +157,7 @@ INSERT INTO `orders` (`order_id`, `account_id`, `orderDate`, `total_amount`, `st
 (12, 10, '2024-11-16 21:24:17', 9000, 'pending'),
 (13, 10, '2024-11-16 21:31:32', 9000, 'pending'),
 (14, 10, '2024-11-16 22:28:08', 5000, 'pending'),
-(15, 10, '2024-11-16 22:28:33', 5000, 'pending'),
-(16, 9, '2024-11-22 12:49:06', 5000, 'shipped');
+(15, 10, '2024-11-16 22:28:33', 5000, 'pending');
 
 -- --------------------------------------------------------
 
@@ -188,8 +183,7 @@ INSERT INTO `product` (`product_id`, `product_name`, `price`, `product_descripti
 (5, 'CPU', 5000, ' It is the primary component of a computer that performs most of the processing and control functions', '672479b4d18d24.55399969.jpg', '2024-11-01 10:12:27'),
 (7, 'Monitor', 2999, 'A monitor is an electronic output device used to display information being entered and processed on a computer.', '6724ea4c031a79.94144893.jpg', '2024-11-01 22:48:44'),
 (8, 'Laptop AL15-5', 25000, ' a portable computer that is small enough to use on ones lap, has its main components (as keyboard and display screen) combined in one unit, and can run on battery power.', '67250a940fa6a1.62943538.jpg', '2024-11-02 01:06:28'),
-(9, 'SSD', 5900, 'Solid-state drives (SSDs) are the most common storage drives today. SSDs are smaller and faster than hard disk drives (HDDs). ', '67275ac95e08a1.70537664.jpg', '2024-11-03 19:13:13'),
-(11, 'MILF', 1600, 'this is for all bois ou there', '6740a44b8f7e43.09333234.jpg', '2024-11-22 23:31:42');
+(9, 'SSD', 5900, 'Solid-state drives (SSDs) are the most common storage drives today. SSDs are smaller and faster than hard disk drives (HDDs). ', '67275ac95e08a1.70537664.jpg', '2024-11-03 19:13:13');
 
 -- --------------------------------------------------------
 
@@ -211,8 +205,7 @@ INSERT INTO `product_category` (`category_id`, `product_id`) VALUES
 (8, 5),
 (10, 8),
 (5, 7),
-(8, 9),
-(8, 11);
+(8, 9);
 
 -- --------------------------------------------------------
 
@@ -274,8 +267,7 @@ INSERT INTO `stocks` (`product_id`, `stock`) VALUES
 (5, 15),
 (7, 33),
 (8, 6),
-(9, 13),
-(11, 56);
+(9, 13);
 
 -- --------------------------------------------------------
 
@@ -297,16 +289,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `age`, `sex`, `contacts`) VALUES
-(3, 'Levi Asher', 'Penaverde', 19, 'Male', '09385737287'),
-(12, 'Melvin', 'Catuera', 20, 'Male', '97867664'),
-(13, 'Melvin', 'Catuera', 20, 'Male', '09123456789'),
-(14, 'Hans Ivan', 'Penaverde', 14, 'Male', '97654345'),
-(16, 'Cindy', 'Penaverde', 8, 'Female', '998767546'),
 (17, 'Arthur', 'Leywin', 25, 'Male', '9121233214'),
 (19, 'Kim', 'Yebes', 19, 'Male', '98766765'),
-(20, 'Haydie', 'Penaverde', 37, 'Female', '09385746297'),
-(21, 'Haydie', 'Penaverde', 37, 'Female', '09385736297'),
-(23, 'Levi', 'Penaverde', 18, 'Male', '09385736287');
+(30, 'Levi Asher', 'Penaverde', 19, 'Male', '09385736287'),
+(31, 'Ianzaee', 'Ego', 69, 'Female', '09123456789');
 
 --
 -- Indexes for dumped tables
@@ -394,7 +380,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `cart`
@@ -406,7 +392,7 @@ ALTER TABLE `cart`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `orderline`
@@ -436,7 +422,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables

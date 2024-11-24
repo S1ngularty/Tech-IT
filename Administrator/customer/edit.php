@@ -58,6 +58,7 @@ img{
             <div class="div3">
                 <img src="uploads/<?php echo $row['profile_img'] ?>" alt="">
                 <input type="hidden" name="current" value="<?php echo $row['profile_img'] ?>">
+                <input type="hidden" name="user_id" value="<?php echo $row['user_id'] ?>">
                 <div class="profile">
                     <label for="" class="form-label">Profile</label>
                     <input type="file" name="file" class="form-control">
@@ -103,6 +104,12 @@ img{
                 <div class="contact">
                     <label for="" class="form-label">Contacts</label>
                     <input type="text" name="contact" value="<?php echo $row['contacts']?>" class="form-control" >
+                </div>
+                <br>
+                <div class="password">
+                    <label for="" class="form-label">Password</label>
+                    <input type="password" name="password"  class="form-control" >
+                    <input type="hidden" name="current_password" value="<?php echo $row['password']?>" class="form-control" >
                 </div>
             </div>
             </div>
