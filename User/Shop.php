@@ -201,33 +201,39 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
 
     <!-- Main Content -->
     <div class="main-content">
+        
     <div class="product-container">
-        <?php 
-        $sql_display = "SELECT * FROM product inner join stocks using (product_id)";
-        $result = mysqli_query($conn, $sql_display);
-        if (mysqli_num_rows($result) > 0) {
-            while ($row = mysqli_fetch_assoc($result)) {
-                echo '<div class="product-card">';
-                echo '<img src="../Administrator/Product/uploads/' . $row['product_img'] . '" alt="Product Image">';
-                echo '<h5>' . $row['product_name'] . '</h5>';
-                echo '<p>' . $row['product_description'] . '</p>';
-                echo '<p class="price">$' . $row['price'] . '</p>';
+    <?php 
+    $sql_display = "SELECT * FROM product INNER JOIN stocks USING (product_id)";
+    $result = mysqli_query($conn, $sql_display);
+    if (mysqli_num_rows($result) > 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            echo '<div class="product-card">';
 
-                echo '<form action="cart/store.php" method="POST">';
-                echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
-                echo '<input type="number" name="quantity" value="1" min="1" max="'.$row["stock"].'" step="1" style="width: 70px; margin-right:20px;">';
-                echo '<input type="hidden" name="status" value="In Cart">';
-                echo '<button type="submit">Add to Cart</button>';
-                echo '</form>';
-                echo '<a href="cart/product.php?product_id=' . $row['product_id'] . '">View Product</a>';
+            // Clickable area excluding buttons
+            echo '<a href="cart/product.php?product_id=' . $row['product_id'] . '" style="text-decoration: none; color: inherit;">';
+            echo '<img src="../Administrator/Product/uploads/' . $row['product_img'] . '" alt="Product Image">';
+            echo '<h5>' . $row['product_name'] . '</h5>';
+            echo '<p>' . $row['product_description'] . '</p>';
+            echo '<p class="price">$' . $row['price'] . '</p>';
+            echo '</a>';
 
-                echo '</div>';
-            }
-        } else {
-            echo "No products found.";
+            // Buttons
+            echo '<form action="cart/store.php" method="POST">';
+            echo '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
+            echo '<input type="number" name="quantity" value="1" min="1" max="' . $row['stock'] . '" step="1" style="width: 70px; margin-right:20px;">';
+            echo '<input type="hidden" name="status" value="In Cart">';
+            echo '<button type="submit">Add to Cart</button>';
+            echo '</form>';
+
+            echo '</div>';
         }
-        ?>
-    </div>
+    } else {
+        echo "No products found.";
+    }
+    ?>
+</div>
+
 </div>
 <!-- Checkout Button -->
 <!-- <div class="checkout-button-container">
