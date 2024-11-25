@@ -75,7 +75,7 @@ try {
     // Get the last inserted order ID
     $order_id = mysqli_insert_id($conn);
 
-    // Insert each item into orderline
+    // Insert each item into orderline and update stock
     $orderline_query = "INSERT INTO orderline (order_id, product_id, quantity, unit_price, total_price, created) VALUES (?, ?, ?, ?, ?, NOW())";
     $orderline_stmt = mysqli_prepare($conn, $orderline_query);
 
@@ -85,6 +85,16 @@ try {
 
         if (mysqli_stmt_affected_rows($orderline_stmt) <= 0) {
             throw new Exception("Error inserting into orderline: " . mysqli_error($conn));
+        }
+
+        // Update stock after successful insertion into orderline
+        $update_stock_query = "UPDATE stocks SET stock = stock - ? WHERE product_id = ?";
+        $update_stock_stmt = mysqli_prepare($conn, $update_stock_query);
+        mysqli_stmt_bind_param($update_stock_stmt, "ii", $item['quantity'], $item['product_id']);
+        mysqli_stmt_execute($update_stock_stmt);
+
+        if (mysqli_stmt_affected_rows($update_stock_stmt) <= 0) {
+            throw new Exception("Error updating stock: " . mysqli_error($conn));
         }
     }
 
@@ -112,4 +122,3 @@ try {
 }
 }
 ?>
-    

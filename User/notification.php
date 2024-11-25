@@ -11,18 +11,22 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id']; // The user_id from session is being used here
 
-// Fetch purchase history for the current user
+// Fetch purchase history for the current user where the status is "shipped"
 $sql = "SELECT o.order_id, o.orderDate, o.total_amount, o.status,
                ol.product_id, p.product_name, p.product_img, ol.quantity, ol.unit_price, ol.total_price, ol.created
-        FROM orders o
+        FROM order_details_view o
         INNER JOIN orderline ol ON o.order_id = ol.order_id
         INNER JOIN product p ON ol.product_id = p.product_id
-        WHERE o.account_id = ?";
+        WHERE o.account_id = ? AND o.status = 'shipped'"; // Filtering by account_id and status
 
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, 'i', $user_id);
+if (!$stmt) {
+    die("Error preparing statement: " . mysqli_error($conn));
+}
+
+mysqli_stmt_bind_param($stmt, 'i', $user_id); // Binding the parameter for user_id
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
@@ -32,6 +36,7 @@ while ($row = mysqli_fetch_assoc($result)) {
     $orders[$row['order_id']][] = $row;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,6 +172,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <p>You have no purchase history.</p>
     <?php endif; ?>
 </div>
+
 
 </body>
 </html>
