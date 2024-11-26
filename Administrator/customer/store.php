@@ -20,7 +20,7 @@ print "</pre>";
 if (
     preg_match("/^[a-zA-Z\s]+$/", $fname) && preg_match("/^[a-zA-Z\s]+$/", $lname) &&
     ($age >= 12 && $age <= 120) && preg_match("/^\d{11}$/", $contact) &&
-    preg_match("/^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{3,}$/", $username) &&
+    preg_match("/^[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/", $username) &&
     preg_match("/[A-Za-z0-9%_\-\\@()]{8,30}/", $password1)
 ){
      $password=trim(sha1($_POST['password']));
@@ -41,7 +41,7 @@ if(in_array($extension,$allowed)){
     echo $newfile=uniqid('',true).".".$extension;
     $location="uploads/".$newfile;  
 
-    $sql2="INSERT INTO account (user_id,username,password,role,profile_img)values(?,?,?,?,?)";
+    $sql2="INSERT INTO account (user_id,email,password,role,profile_img)values(?,?,?,?,?)";
     $stmt2=mysqli_prepare($conn,$sql2);
     mysqli_stmt_bind_param($stmt2,'issss',$last_ID,$username,$password,$role,$newfile);
     mysqli_stmt_execute($stmt2);
@@ -61,7 +61,7 @@ if(in_array($extension,$allowed)){
    throw new Exception("invalid image format");
 }
     }else{
-        $sql2="INSERT INTO account (user_id,username,password,role)values(?,?,?,?)";
+        $sql2="INSERT INTO account (user_id,email,password,role)values(?,?,?,?)";
     $stmt2=mysqli_prepare($conn,$sql2);
     mysqli_stmt_bind_param($stmt2,'isss',$last_ID,$username,$password,$role);
     mysqli_stmt_execute($stmt2);

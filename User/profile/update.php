@@ -3,6 +3,37 @@ include("../../administrator/includes/config.php");
 
 if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'user' && isset($_SESSION['role'])){
 
+    if(isset($_POST['update_password'])){
+        mysqli_begin_transaction($conn);
+        try{
+        $old=sha1(trim($_POST['old_password']));
+        if($_POST['current_password']==$old){
+       echo   $npass=trim($_POST['new_password']);
+          $cpass=trim($_POST['confirm_password']);
+         echo $ID=$_POST['user_id'];
+          if(preg_match("/[a-zA-Z0-9#%@_-]/",$cpass) && strlen($cpass)>=8){
+            $final=sha1($cpass);
+            $sql_pass="UPDATE account SET password=? where user_id=?";
+            $stmt_pass=mysqli_prepare($conn,$sql_pass);
+            mysqli_stmt_bind_param($stmt_pass,'si',$final,$ID);
+            if(mysqli_stmt_execute($stmt_pass)){
+                mysqli_commit($conn);
+                //header("location:edit.php");
+                exit;
+            }
+    
+          }else{
+            throw new Exception("new password didnt match");
+          }
+        }else{
+            throw new Exception("current password didnt match");
+        }
+    }catch(Exception $e){
+        mysqli_rollback($conn);
+        print "error: ".$e->getMessage();
+    }
+    }
+
 if(isset($_POST['update'])){
     echo $_FILES['file']['error'];
     echo $UID= $_SESSION['update_id'];
@@ -13,8 +44,6 @@ if(isset($_POST['update'])){
     echo $gender=trim($_POST['gender']);    
     echo $contact=trim($_POST['contact']);
     echo $username=trim($_POST['username']);
-    echo $new_pass=trim($_POST['new_password']);
-    echo $confirm_pass=trim($_POST['confirm_password']);
     echo $filename=$_FILES['file']['name'];
     $file_temp=$_FILES['file']['tmp_name'];
     $allowed=array('jpg','jpeg','png');
@@ -23,7 +52,7 @@ if(isset($_POST['update'])){
  if (
     preg_match("/^[a-zA-Z\s]/", $fname) && preg_match("/^[a-zA-Z\s]/", $lname) &&
     ($age >= 12 && $age <= 120) && strlen($contact)==11 &&
-    preg_match("/[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}/", $username) && $new_pass === $confirm_pass){
+    preg_match("/[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}/", $username)){
  try{
     $pswd=sha1($new_pass);
         mysqli_begin_transaction($conn);    
@@ -40,9 +69,9 @@ if(isset($_POST['update'])){
              if(in_array($extension,$allowed)){
                  echo $newfile=uniqid('',true).".".$extension;
                  $location="../../administrator/customer/uploads/".$newfile;
-                 $sql3="UPDATE account SET username=?,password=?, profile_img=? where account_id=?";
+                 $sql3="UPDATE account SET email=?, profile_img=? where account_id=?";
                  $stmt3=mysqli_prepare($conn,$sql3);
-                 mysqli_stmt_bind_param($stmt3,'sssi',$username,$pswd,$newfile,$UID);
+                 mysqli_stmt_bind_param($stmt3,'ssi',$username,$newfile,$UID);
                  mysqli_stmt_execute($stmt3);
  
                  if(mysqli_stmt_affected_rows($stmt3)>0){
@@ -76,13 +105,13 @@ if(isset($_POST['update'])){
                  throw new Exception("invalid image format");
              }
            }else{
-            $sql3="UPDATE account SET username=?, password=? where account_id=?";
+            $sql3="UPDATE account SET email=? where account_id=?";
             $stmt3=mysqli_prepare($conn,$sql3);
-            mysqli_stmt_bind_param($stmt3,'ssi',$username,$pswd,$UID);
+            mysqli_stmt_bind_param($stmt3,'si',$username,$UID);
             mysqli_stmt_execute($stmt3);
             if(mysqli_stmt_affected_rows($stmt3)>=0){
                 mysqli_commit($conn);
-                // header("location:edit.php");
+                 header("location:edit.php");
                 exit;
             }else{
                 throw new Exception("error2");

@@ -48,78 +48,249 @@ img{
     border: solid thin;
     border-radius: 50%;
 }
+/* Modal Background */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+/* Show Modal When Targeted */
+.modal:target {
+    display: flex;
+}
+
+/* Modal Content Styling */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 40%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Close Button Styling */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    text-decoration: none;
+    color: #aaa;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    .modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+}
+/* Show Modal When Targeted */
+.modal:target {
+    display: flex;
+}
+
+/* Modal Content Styling */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 40%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+/* Close Button Styling */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    text-decoration: none;
+    color: #aaa;
+}
+
+.close-btn:hover {
+    color: black;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
 </style>
 <body> 
    <center> <h2>Update Account</h2></center>
     <div class="container">
        <?php include("../alert.php"); ?>
-        <form action="update.php" method="post" enctype="multipart/form-data">
-        <div class="content">
-            <div class="div3">
-                <img src="uploads/<?php echo $row['profile_img'] ?>" alt="">
-                <input type="hidden" name="current" value="<?php echo $row['profile_img'] ?>">
-                <input type="hidden" name="user_id" value="<?php echo $row['user_id'] ?>">
-                <div class="profile">
-                    <label for="" class="form-label">Profile</label>
-                    <input type="file" name="file" class="form-control">
-                </div>
+       <form action="update.php" method="post" enctype="multipart/form-data">
+    <div class="content">
+        <div class="div3">
+            <img src="uploads/<?php echo $row['profile_img'] ?>" alt="">
+            <input type="hidden" name="current" value="<?php echo $row['profile_img'] ?>">
+            <input type="hidden" name="user_id" value="<?php echo $row['user_id'] ?>">
+            <div class="profile">
+                <label for="" class="form-label">Profile</label>
+                <input type="file" name="file" class="form-control">
             </div>
+        </div>
         <div class="div1">
-                <div class="firstname">
-                    <input type="hidden" name="ID" value="<?php echo $_GET['id']; ?>">
-                    <label for="" class="form-label">First Name</label>
-                    <input type="text" name="firstname" class="form-control" value="<?php echo $row['first_name'] ?>" >
-                </div>
-                <br>
-                <div class="lastname">
-                    <label for="" class="form-label">Last Name</label>
-                     <input type="text" class="form-control" name="lastname" value="<?php echo $row['last_name'] ?>" >
-                </div>
-                <br>
-                <div class="age">
-                    <label for="" class="form-label">Age</label>
-                    <input type="number" name="age" value="<?php echo $row['age'] ?>" class="form-control">
-                </div>
-                <br>
-                <div class="gender">
-                    <label for="" class="form-label">Gender</label>
-                    <select name="gender" id="" class="form-select">
-                        <option value="male" <?php echo ($row['sex']=='Male' ? 'selected': ''); ?> >Male</option>
-                        <option value="female" <?php echo ($row['sex']=='Female' ? 'selected': ''); ?>>Female</option>
-                    </select>
-                </div>
-                <br>
+            <div class="firstname">
+                <input type="hidden" name="ID" value="<?php echo $_GET['id']; ?>">
+                <label for="" class="form-label">First Name</label>
+                <input type="text" name="firstname" class="form-control" value="<?php echo $row['first_name'] ?>">
             </div>
-            <div class="div2">
+            <br>
+            <div class="lastname">
+                <label for="" class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="lastname" value="<?php echo $row['last_name'] ?>">
+            </div>
+            <br>
+            <div class="age">
+                <label for="" class="form-label">Age</label>
+                <input type="number" name="age" value="<?php echo $row['age'] ?>" class="form-control">
+            </div>
+            <br>
+            <div class="gender">
+                <label for="" class="form-label">Gender</label>
+                <select name="gender" id="" class="form-select">
+                    <option value="male" <?php echo ($row['sex'] == 'Male' ? 'selected' : ''); ?>>Male</option>
+                    <option value="female" <?php echo ($row['sex'] == 'Female' ? 'selected' : ''); ?>>Female</option>
+                </select>
+            </div>
+            <br>
+        </div>
+        <div class="div2">
             <div class="username">
-                    <label for="" class="form-label">Username</label>
-                     <input type="email" class="form-control" name="username" value="<?php echo $row['username'] ?>" placeholder="User@example.com" >
-                </div>
-                <br>
-                <div class="role">
-                    <label for="" class="form-label">Role</label>
-                    <input type="text" class="form-control" value="<?php echo $row['role'] ?>" disabled>
-                </div>
-                <br>
-                <div class="contact">
-                    <label for="" class="form-label">Contacts</label>
-                    <input type="text" name="contact" value="<?php echo $row['contacts']?>" class="form-control" >
-                </div>
-                <br>
-                <div class="password">
-                    <label for="" class="form-label">Password</label>
-                    <input type="password" name="password"  class="form-control" >
-                    <input type="hidden" name="current_password" value="<?php echo $row['password']?>" class="form-control" >
-                </div>
+                <label for="" class="form-label">Username</label>
+                <input type="email" class="form-control" name="username" value="<?php echo $row['email'] ?>" placeholder="User@example.com">
             </div>
+            <br>
+            <div class="role">
+                <label for="" class="form-label">Role</label>
+                <input type="text" class="form-control" value="<?php echo $row['role'] ?>" disabled>
             </div>
-            <div class="btn">
-                    <button type="submit" class="btn btn-primary" name='update' value="update">Update</button>
-                </div>
-            </form> 
-           
-
+            <br>
+            <div class="contact">
+                <label for="" class="form-label">Contacts</label>
+                <input type="text" name="contact" value="<?php echo $row['contacts'] ?>" class="form-control">
+            </div>
+            <br>
+            <div class="password">
+                <a href="#passwordModal" class="btn btn-secondary">Change Password</a>
+            </div>
+        </div>
     </div>
+    <div class="btn">
+        <button type="submit" class="btn btn-primary" name="update" value="update">Update</button>
+    </div>
+</form>
+
+<!-- Password Change Modal -->
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <a href="#" class="close-btn">&times;</a>
+        <h3>Change Password</h3>
+        <form action="update.php" method="post">
+            <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+            <input type="hidden" name="current_password" value="<?php echo $row['password']; ?>">
+            <div class="form-group">
+                <label for="oldPassword">Old Password</label>
+                <input type="password" id="oldPassword" name="old_password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" name="new_password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirm_password" class="form-control" required>
+            </div>
+            <button type="submit" name="update_pass" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
 </body>
 
 

@@ -29,7 +29,7 @@ if(mysqli_affected_rows($conn)>0){
         $status=($row['status']==='pending') ? 'selected' : '';
         $status2=($row['status']==='shipped') ? 'selected' : '';
 print "<tr>
-<td>{$row['username']}</td>
+<td>{$row['email']}</td>
 <td>{$row['total_amount']}</td>
 <td>{$row['orderDate']}</td>
 <td> <form action=update.php method='post'>

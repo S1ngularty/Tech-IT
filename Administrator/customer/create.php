@@ -81,7 +81,7 @@ form{
             <div class="div2">
             <div class="username">
                     <label for="" class="form-label">Username</label>
-                     <input type="email" class="form-control" name="username" placeholder="User@example.com" >
+                     <input type="text" class="form-control" name="username" placeholder="User@example.com" >
                 </div>
                 <br>
                 <div class="password">

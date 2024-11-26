@@ -22,24 +22,29 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
         while($row= mysqli_fetch_assoc($result)){
             $status = ($row['account_status'] != 'activate') ? 'activate' : 'deactivate';
             $checked = ($row['account_status'] != 'activate') ? '' : 'checked';
-            $statusText = ($row['account_status'] != 'activate') ? 'Activate' : 'Deactivate';
+            $statusText = ($row['account_status'] == 'activate') ? 'Activate' : 'Deactivate';
             
             print "<tr>
                 <td>{$row['account_id']}</td>
                 <td>{$row['first_name']} &nbsp {$row['last_name']}</td>
-                <td><a href='view.php?id={$row['account_id']}' style='text-decoration:none;'>{$row['username']}</a></td>
-                <td>
-                    <form action='update.php?ID={$row['account_id']}' method='post' class='role-form'>
-                        <label class='role-label'>
-                            <input type='radio' ".($row['role']=='admin' ? 'checked' : '')." name='role' value='admin' onclick='this.form.submit()'>
-                            <span class='role-text'>Admin</span>
-                        </label>
-                        <label class='role-label'>
-                            <input type='radio' name='role' value='user' ".($row['role']=='user' ? 'checked' : '')." onclick='this.form.submit()'>
-                            <span class='role-text'>User</span>
-                        </label>
-                    </form>
-                </td>
+                <td><a href='view.php?id={$row['account_id']}' style='text-decoration:none;'>{$row['email']}</a></td>
+<td>
+    <form action='update.php?ID={$row['account_id']}' method='post' class='role-form'>
+        <label class='role-label'>
+            <input type='radio' name='role' value='admin' 
+                ".(($row['role'] == 'admin') ? 'checked' : '')." 
+                onclick='this.form.submit()' ".(($status=='activate')? 'disabled' :'').">
+            <span class='role-text'>Admin</span>
+        </label>
+        <label class='role-label'>
+            <input type='radio' name='role' value='user' 
+                ".(($row['role'] == 'user') ? 'checked' : '')." 
+                onclick='this.form.submit()' ".(($status=='activate')? 'disabled' :'').">
+            <span class='role-text'>User</span>
+        </label>
+    </form>
+</td>
+
                 <td class='action-icons'>
                     <!-- Edit Icon -->
                     <a href='edit.php?id={$row['user_id']}' title='Edit'>
@@ -176,31 +181,34 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
     }
 
     /* Role Design Fix */
-    .role-form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-    }
+ /* Role Form Styling */
+.role-form {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-    .role-label {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-    }
+.role-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
 
-    .role-text {
-        margin-left: 5px;
-    }
+.role-label input {
+    margin: 0;
+}
 
-    .role-label input {
-        display: none;
-    }
+.role-label input:checked + .role-text {
+    font-weight: bold;
+    color: #007bff; /* Blue for selected role */
+}
 
-    .role-label input:checked + .role-text {
-        font-weight: bold;
-        color: #007bff;
-    }
+.role-text {
+    margin: 0;
+    font-size: 14px;
+}
+
 </style>
 
 <?php 

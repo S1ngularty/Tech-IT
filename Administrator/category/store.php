@@ -6,7 +6,7 @@ if(isset($_POST['create'])){
     mysqli_begin_transaction($conn);
     $sql="INSERT INTO category (category_name) values (?) ";
     $stmt1=mysqli_prepare($conn,$sql);
-    mysqli_stmt_bind_param($stmt1,'s',trim($_POST['create']));
+    mysqli_stmt_bind_param($stmt1,'s',$_POST['create']);
     if(mysqli_stmt_execute($stmt1)){
         mysqli_commit($conn);
         header("location:edit.php");

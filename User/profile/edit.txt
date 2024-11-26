@@ -119,8 +119,8 @@ select {
 
 /* Button Styling */
 .btn {
-    display: flex;  
-    justify-content: flex-end;  
+    display: flex;  /* Using flex */
+    justify-content: flex-end;  /* Align the button to the right */
     margin-top: 30px;
     position:relative;
     left: 400px;
@@ -140,83 +140,24 @@ select {
 .btn button:hover {
     background-color: #218838;
 }
-
-/* Modal Styling */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal.active {
-    display: flex;
-}
-
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    width: 40%;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 28px;
-    text-decoration: none;
-    color: #aaa;
-}
-
-.close-btn:hover {
-    color: black;
-}
 </style>
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const openModal = document.getElementById('openModal');
-    const modal = document.getElementById('passwordModal');
-    const closeModal = document.querySelector('.close-btn');
-
-    openModal.addEventListener('click', function () {
-        modal.classList.add('active');
-    });
-
-    closeModal.addEventListener('click', function () {
-        modal.classList.remove('active');
-    });
-});
-</script>
-
 <body> 
-   <center><h2>Update Account</h2></center>
-   <div class="container">
+   <center> <h2>Update Account</h2></center>
+    <div class="container">
+        
         <form action="update.php" method="post" enctype="multipart/form-data">
-            <div class="content">
-                <!-- Profile Section -->
-                <div class="div3">
-                    <img src="../../administrator/customer/uploads/<?php echo $row['profile_img'] ?>" alt="Profile Image">
-                    <input type="hidden" name="current" value="<?php echo $row['profile_img'] ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $row['user_id'] ?>">
+        <div class="content">
+            <div class="div3">
+                <img src="../../administrator/customer/uploads/<?php echo $row['profile_img'] ?>" alt="Profile Image">
+                <input type="hidden" name="current" value="<?php echo $row['profile_img'] ?>">
+                <input type="hidden" name="user_id" value="<?php echo $row['user_id'] ?>">
+                <div class="profile">
                     <label for="file" class="form-label">Profile Image</label>
                     <input type="file" name="file" class="form-control">
                 </div>
-                
-                <!-- Other User Info Sections -->
-                <!-- Code here for other div1 and div2 details -->
-                <div class="div1">
+            </div>
+        <div class="div1">
                 <div class="firstname">
                     <label for="firstname" class="form-label">First Name</label>
                     <input type="text" name="firstname" class="form-control" value="<?php echo $row['first_name'] ?>" required>
@@ -246,41 +187,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     <label for="contact" class="form-label">Contacts</label>
                     <input type="text" name="contact" value="<?php echo $row['contacts']?>" class="form-control" required>
                 </div>
-                <!-- Change Password Modal Trigger -->
+                <!-- Change Password Inputs -->
                 <div class="password">
-                    <button type="button" name="update_password" id="openModal" class="btn btn-secondary">Change Password</button>
+                    <label for="new_password" class="form-label">New Password</label>
+                    <input type="password" name="new_password" class="form-control">
+                </div>
+                <div class="password">
+                    <label for="confirm_password" class="form-label">Confirm New Password</label>
+                    <input type="password" name="confirm_password" class="form-control">
                 </div>
             </div>
+            </div>
 
-            <!-- Submit Button -->
             <div class="btn">
-                <button type="submit" class="btn btn-primary" name="update">Update</button>
+                <button type="submit" class="btn btn-primary" name="update" value="update">Update</button>
             </div>
-        </form>
-
-        <!-- Modal -->
-        <div id="passwordModal" class="modal">
-            <div class="modal-content">
-                <a href="#" class="close-btn">&times;</a>
-                <h3>Change Password</h3>
-                <form action="update.php" method="post">
-                    <input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
-                    <input type="hidden" name="current_password" value="<?php echo $row['password']; ?>">
-                    <div class="form-group">
-                        <label for="oldPassword">Old Password</label>
-                        <input type="password" id="oldPassword" name="old_password" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="newPassword">New Password</label>
-                        <input type="password" id="newPassword" name="new_password" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" name="confirm_password" class="form-control" required>
-                    </div>
-                    <button type="submit" name="update_password`" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
+        </form> 
     </div>
 </body>

@@ -23,7 +23,7 @@ $result = mysqli_query($conn, $sql_display);
 $product = mysqli_fetch_assoc($result);
 
 // Fetch reviews for the product
-$sql_reviews = "SELECT r.review_id, r.rating, r.comment, a.username, r.create_at, r.account_id 
+$sql_reviews = "SELECT r.review_id, r.rating, r.comment, a.email, r.create_at, r.account_id, r.product_id
                 FROM review r
                 INNER JOIN account a ON r.account_id = a.account_id
                 WHERE r.product_id = ?
@@ -283,7 +283,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                     <p class="review-text">"<?php echo htmlspecialchars($review['comment']); ?>"</p>
 
                     <!-- Author and Date at the bottom -->
-                    <small class="review-meta">- <?php echo htmlspecialchars($review['username']); ?> on <?php echo date("F j, Y", strtotime($review['create_at'])); ?></small>
+                    <small class="review-meta">- <?php echo htmlspecialchars($review['email']); ?> on <?php echo date("F j, Y", strtotime($review['create_at'])); ?></small>
 
                     <!-- Display pencil icon if the logged-in user is the author -->
                     <?php if ($user_id && $user_id == $review['account_id']) : ?>
@@ -291,6 +291,7 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                         <div class="edit-form" id="edit-form-<?php echo $review['review_id']; ?>">
                             <form action="../review/update.php" method="post">
                                 <input type="hidden" name="review_id" value="<?php echo $review['review_id']; ?>">
+                                <input type="hidden" name="product_id" value="<?php echo $review['product_id']; ?>">
                                 <textarea name="comment"><?php echo htmlspecialchars($review['comment']); ?></textarea>
                                 <select name="rating">
                                     <option value="1" <?php echo $review['rating'] == 1 ? 'selected' : ''; ?>>1 Star</option>

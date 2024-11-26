@@ -29,6 +29,39 @@ if(isset($_GET['stat'])){
     }
 }
 
+if(isset($_POST['update_password'])){
+    mysqli_begin_transaction($conn);
+    try{
+    $old=sha1(trim($_POST['old_password']));
+    if($_POST['current_password']==$old){
+      $npass=trim($_POST['new_password']);
+      $cpass=trim($_POST['confirm_password']);
+     echo $ID=$_POST['user_id'];
+      if(preg_match("/[a-zA-Z0-9#%@_-]/",$cpass) && strlen($cpass)>=8){
+        $final=sha1($cpass);
+        $sql_pass="UPDATE account SET password=? where user_id=?";
+        $stmt_pass=mysqli_prepare($conn,$sql_pass);
+        mysqli_stmt_bind_param($stmt_pass,'si',$final,$ID);
+        if(mysqli_stmt_execute($stmt_pass)){
+            mysqli_commit($conn);
+            header("location:index.php");
+            exit;
+        }
+
+      }else{
+        throw new Exception("new password didnt match");
+      }
+    }else{
+        throw new Exception("current password didnt match");
+    }
+}catch(Exception $e){
+    mysqli_rollback($conn);
+    print "error: ".$e->getMessage();
+}
+}
+
+
+
 
 if(isset($_POST['update'])){
     $ID=$_POST['ID'];
@@ -41,7 +74,6 @@ if(isset($_POST['update'])){
     echo $gender=trim($_POST['gender']);    
     echo $contact=trim($_POST['contact']);
     echo $username=trim($_POST['username']);
-    echo $password1= $_POST['password'] ;
     echo $filename=$_FILES['file']['name'];
     $file_temp=$_FILES['file']['tmp_name'];
     $allowed=array('jpg','jpeg','png');
@@ -50,11 +82,9 @@ if(isset($_POST['update'])){
  if (
     preg_match("/^[a-zA-Z\s]/", $fname) && preg_match("/^[a-zA-Z\s]/", $lname) &&
     ($age >= 12 && $age <= 120) && strlen($contact)==11 &&
-    preg_match("/[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}/", $username)
-     && (strlen($password1)>=8 && preg_match("/[a-zA-Z0-9#@()%-_]/",$password1))){
+    preg_match("/[a-zA-Z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}/", $username)){
 
     try{
-        $password=sha1($password1);
         mysqli_begin_transaction($conn);    
         $sql2="UPDATE user SET first_name=?, last_name=?, age=?, sex=?, contacts=? where user_id=?";
         $stmt2=mysqli_prepare($conn,$sql2);
@@ -69,9 +99,9 @@ if(isset($_POST['update'])){
              if(in_array($extension,$allowed)){
                  echo $newfile=uniqid('',true).".".$extension;
                  $location="uploads/".$newfile;
-                 $sql3="UPDATE account SET username=?,password=?, profile_img=? where user_id=?";
+                 $sql3="UPDATE account SET email=?, profile_img=? where user_id=?";
                  $stmt3=mysqli_prepare($conn,$sql3);
-                 mysqli_stmt_bind_param($stmt3,'sssi',$username,$password,$newfile,$_SESSION['update_id']);
+                 mysqli_stmt_bind_param($stmt3,'ssi',$username,$newfile,$_SESSION['update_id']);
                  mysqli_stmt_execute($stmt3);
  
                  if(mysqli_stmt_affected_rows($stmt3)>0){
@@ -105,9 +135,9 @@ if(isset($_POST['update'])){
                  throw new Exception("invalid image format");
              }
            }else{
-            $sql3="UPDATE account SET username=?,password=? where user_id=?";
+            $sql3="UPDATE account SET email=? where user_id=?";
             $stmt3=mysqli_prepare($conn,$sql3);
-            mysqli_stmt_bind_param($stmt3,'ssi',$username,$password,$_SESSION['update_id']);
+            mysqli_stmt_bind_param($stmt3,'si',$username,$_SESSION['update_id']);
             mysqli_stmt_execute($stmt3);
             if(mysqli_stmt_affected_rows($stmt3)>=0){
                 mysqli_commit($conn);

@@ -200,7 +200,7 @@ $result = mysqli_stmt_get_result($stmt);
         </a>
     </div>
     <ul class="nav-links">
-        <li><a href="#">Profile</a></li>
+        <li><a href="../profile/edit.php">Profile</a></li>
         <li><a href="http:/Tech-IT/administrator/customer/logout.php">Log out</a></li>
     </ul>
 </nav>

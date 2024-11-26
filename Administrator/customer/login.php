@@ -6,7 +6,7 @@ include("../../User/alert.php");
     if(isset($_POST['login'])){
         $username = trim($_POST['username']);
     $password = sha1($_POST['password']);
-    $sql1="SELECT account_id, role,account_status FROM account where username=? && password=?";
+    $sql1="SELECT account_id, role,account_status FROM account where email=? && password=?";
     $stmt1=mysqli_prepare($conn,$sql1);
     mysqli_stmt_bind_param($stmt1,'ss',$username,$password);
     $result=mysqli_stmt_execute($stmt1);

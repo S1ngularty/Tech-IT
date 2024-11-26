@@ -86,7 +86,7 @@ img{
             <div class="div2">
             <div class="username">
                     <label for="" class="form-label">Username</label>
-                     <input type="email" class="form-control" name="username" value="<?php echo $row['username'] ?>" disabled placeholder="User@example.com" required>
+                     <input type="email" class="form-control" name="username" value="<?php echo $row['email'] ?>" disabled placeholder="User@example.com" required>
                 </div>
                 <br>
                 <div class="role">

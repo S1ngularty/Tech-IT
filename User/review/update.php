@@ -57,7 +57,7 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSIO
 
     if (mysqli_stmt_affected_rows($stmt_update) > 0) {
         echo "Review updated successfully!";
-        header("Location: ../shop.php");
+        header("Location: ../cart/product.php?product_id=$product_id");
         exit();
     } else {
         echo "Failed to update the review.";
