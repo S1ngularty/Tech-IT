@@ -88,7 +88,6 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
     tr {
         text-align: center;
     }
-    /* Action Icons Styling */
     .action-icons {
         display: flex;
         justify-content: space-evenly;
@@ -108,7 +107,6 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
         transform: scale(1.1);
         color: #007bff;
     }
-    /* Switch Styling for Activate/Deactivate */
     .switch {
         position: relative;
         display: inline-block;
@@ -158,17 +156,15 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
         border-radius: 50px;
     }
 
-    /* Status Label Styling */
     .status-label {
         font-size: 14px;
         font-weight: bold;
         margin-right: 10px;
     }
 
-    /* Edit and Delete Icon Customization */
     .delete-icon {
         font-size: 20px;
-        color: #dc3545; /* Bootstrap Danger Red */
+        color: #dc3545; 
         transition: color 0.3s ease;
     }
 
@@ -180,8 +176,6 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
         color: #dc3545;
     }
 
-    /* Role Design Fix */
- /* Role Form Styling */
 .role-form {
     display: flex;
     justify-content: center;
@@ -201,7 +195,7 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
 
 .role-label input:checked + .role-text {
     font-weight: bold;
-    color: #007bff; /* Blue for selected role */
+    color: #007bff;
 }
 
 .role-text {

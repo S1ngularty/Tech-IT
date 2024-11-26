@@ -37,7 +37,7 @@ if(isset($_POST['update_password'])){
       $npass=trim($_POST['new_password']);
       $cpass=trim($_POST['confirm_password']);
      echo $ID=$_POST['user_id'];
-      if(preg_match("/[a-zA-Z0-9#%@_-]/",$cpass) && strlen($cpass)>=8){
+      if(preg_match("/[a-zA-Z0-9#%@_-]/",$cpass) && strlen($cpass)>=8 && $npass == $cpass){
         $final=sha1($cpass);
         $sql_pass="UPDATE account SET password=? where user_id=?";
         $stmt_pass=mysqli_prepare($conn,$sql_pass);

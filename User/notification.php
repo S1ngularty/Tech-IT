@@ -11,26 +11,25 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$user_id = $_SESSION['user_id']; // The user_id from session is being used here
+$user_id = $_SESSION['user_id'];
 
-// Fetch purchase history for the current user where the status is "shipped"
+
 $sql = "SELECT o.order_id, o.orderDate, o.total_amount, o.status,
                ol.product_id, p.product_name, p.product_img, ol.quantity, ol.unit_price, ol.total_price, ol.created
         FROM order_details_view o
         INNER JOIN orderline ol ON o.order_id = ol.order_id
         INNER JOIN product p ON ol.product_id = p.product_id
-        WHERE o.account_id = ? AND o.status = 'shipped'"; // Filtering by account_id and status
+        WHERE o.account_id = ? AND o.status = 'shipped'";
 
 $stmt = mysqli_prepare($conn, $sql);
 if (!$stmt) {
     die("Error preparing statement: " . mysqli_error($conn));
 }
 
-mysqli_stmt_bind_param($stmt, 'i', $user_id); // Binding the parameter for user_id
+mysqli_stmt_bind_param($stmt, 'i', $user_id);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-// Group data by order_id
 $orders = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $orders[$row['order_id']][] = $row;
@@ -94,7 +93,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             height: 60px;
             border-radius: 5px;
             object-fit: cover;
-            margin-right: 15px;  /* Adjust margin between image and details */
+            margin-right: 15px;
         }
         .order-item-details {
             flex: 1;

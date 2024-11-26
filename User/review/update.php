@@ -1,7 +1,6 @@
 <?php
 include '../../Administrator/includes/config.php';
 
-// List of bad words
 $bad_words = [
     "abuse", "idiot", "dumb", "stupid", "fool", "heck", "crap", "hell", 
     "damn", "bastard", "moron", "slut", "whore", "retard", "faggot", 
@@ -20,7 +19,6 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSIO
     header("Location: ../../Administrator/customer/login.php");
     exit;
 } else {
-    // Check if the user is logged in and the update button was clicked
     if (!isset($_SESSION['user_id']) && !isset($_POST['update_btn'])) {
         echo "Please log in to update your review.";
         exit;
@@ -31,12 +29,10 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSIO
     $rating = isset($_POST['rating']) ? (int)$_POST['rating'] : 0;
     $comment = isset($_POST['comment']) ? $_POST['comment'] : '';
 
-    // Replace bad words with asterisks
     $pattern = "/\b(" . implode('|', $bad_words) . ")\b/i";
-    $replacement = str_repeat('*', 5); // Replace each bad word with "*****"
+    $replacement = str_repeat('*', 5);
     $comment = preg_replace($pattern, $replacement, $comment);
 
-    // Ensure the review exists and belongs to the user
     $sql_check = "SELECT * FROM review WHERE review_id = ? AND account_id = ?";
     $stmt_check = mysqli_prepare($conn, $sql_check);
     mysqli_stmt_bind_param($stmt_check, 'ii', $review_id, $_SESSION['user_id']);
@@ -48,10 +44,9 @@ if (!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSIO
         exit;
     }
 
-    // Update the review in the database
     $sql_update = "UPDATE review SET rating = ?, comment = ? WHERE review_id = ? AND account_id = ?";
     $stmt_update = mysqli_prepare($conn, $sql_update);
-    $acct_id = $_SESSION['user_id']; // Get the user id for binding
+    $acct_id = $_SESSION['user_id'];
     mysqli_stmt_bind_param($stmt_update, 'isii', $rating, $comment, $review_id, $acct_id);
     mysqli_stmt_execute($stmt_update);
 

@@ -6,7 +6,6 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
     exit;
 }else{
 
-// Check if product_id exists
 if (isset($_GET['product_id'])) {
     $product_id = (int)$_GET['product_id'];
 } else {
@@ -14,7 +13,6 @@ if (isset($_GET['product_id'])) {
     exit;
 }
 
-// Retrieve product details
 $sql_display = "SELECT product_id, product_name, price, product_description, product_img, s.stock 
                 FROM product 
                 INNER JOIN stocks s USING(product_id) 
@@ -22,7 +20,6 @@ $sql_display = "SELECT product_id, product_name, price, product_description, pro
 $result = mysqli_query($conn, $sql_display);
 $product = mysqli_fetch_assoc($result);
 
-// Fetch reviews for the product
 $sql_reviews = "SELECT r.review_id, r.rating, r.comment, a.email, r.create_at, r.account_id, r.product_id
                 FROM review r
                 INNER JOIN account a ON r.account_id = a.account_id
@@ -37,7 +34,6 @@ if ($stmt_reviews) {
     $reviews_result = mysqli_stmt_get_result($stmt_reviews);
 }
 
-// Check if user is logged in
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 ?>
 
@@ -49,7 +45,6 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     <title><?php echo $product['product_name']; ?> - Tech-IT</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Product Interface */
         .product-interface {
             max-width: 800px;
             margin: 50px auto;
@@ -207,7 +202,6 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
             background-color: #218838;
         }
 
-        /* New Review Form Styles */
         .new-review-form {
             background-color: #f8f9fa;
             padding: 20px;
@@ -282,10 +276,8 @@ $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
                     </div>
                     <p class="review-text">"<?php echo htmlspecialchars($review['comment']); ?>"</p>
 
-                    <!-- Author and Date at the bottom -->
                     <small class="review-meta">- <?php echo htmlspecialchars($review['email']); ?> on <?php echo date("F j, Y", strtotime($review['create_at'])); ?></small>
 
-                    <!-- Display pencil icon if the logged-in user is the author -->
                     <?php if ($user_id && $user_id == $review['account_id']) : ?>
                         <span class="edit-icon" onclick="document.getElementById('edit-form-<?php echo $review['review_id']; ?>').style.display = 'block';">&#9998;</span>
                         <div class="edit-form" id="edit-form-<?php echo $review['review_id']; ?>">

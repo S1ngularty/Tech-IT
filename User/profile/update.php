@@ -8,17 +8,17 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'user' && isset($_SESSION
         try{
         $old=sha1(trim($_POST['old_password']));
         if($_POST['current_password']==$old){
-       echo   $npass=trim($_POST['new_password']);
+          $npass=trim($_POST['new_password']);
           $cpass=trim($_POST['confirm_password']);
-         echo $ID=$_POST['user_id'];
-          if(preg_match("/[a-zA-Z0-9#%@_-]/",$cpass) && strlen($cpass)>=8){
+          $ID=$_POST['user_id'];
+          if(preg_match("/[a-zA-Z0-9#%@_-]/",$cpass) && strlen($cpass)>=8 && $npass==$cpass){
             $final=sha1($cpass);
             $sql_pass="UPDATE account SET password=? where user_id=?";
             $stmt_pass=mysqli_prepare($conn,$sql_pass);
             mysqli_stmt_bind_param($stmt_pass,'si',$final,$ID);
             if(mysqli_stmt_execute($stmt_pass)){
                 mysqli_commit($conn);
-                //header("location:edit.php");
+                header("location:edit.php");
                 exit;
             }
     

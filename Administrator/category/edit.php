@@ -70,7 +70,6 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
 }
 ?>
 
-<!-- Include Font Awesome -->
 <head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
@@ -92,7 +91,7 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
     }
 
     .popup {
-        display: none; /* Hidden by default */
+        display: none; 
         position: fixed;
         left: 0;
         top: 0;
@@ -104,7 +103,7 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
     }
 
     .popup:target {
-        display: flex; /* Show the popup when targeted */
+        display: flex;
     }
 
     .popup-content {
@@ -133,7 +132,6 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
         text-align: center;
     }
 
-    /* Action Icons Styling */
     .action-icons {
         display: flex;
         justify-content: space-evenly;
@@ -157,18 +155,17 @@ if(isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSIO
         color: #007bff;
     }
 
-    /* Edit and Delete Icon Customization */
     .delete-icon {
         font-size: 20px;
-        color: #dc3545; /* Bootstrap Danger Red */
+        color: #dc3545; 
         transition: color 0.3s ease;
     }
 
     .edit-icon:hover {
-        color: #28a745; /* Bootstrap Success Green */
+        color: #28a745; 
     }
 
     .delete-icon:hover {
-        color: #dc3545; /* Bootstrap Danger Red */
+        color: #dc3545;
     }
 </style>

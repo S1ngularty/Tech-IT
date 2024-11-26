@@ -87,7 +87,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSI
         font-weight: bold;
         font-size: 16px;
         padding: 10px 20px;
-        background-color: #28a745; /* Bootstrap Green */
+        background-color: #28a745; 
         color: white;
         border-radius: 5px;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -95,7 +95,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSI
     }
 
     .create-link:hover {
-        background-color: #218838; /* Slightly darker green */
+        background-color: #218838; 
         transform: translateY(-2px);
     }
 
@@ -128,7 +128,6 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSI
         text-decoration: none;
     }
 
-    /* Specific Style for Edit Icon */
     .action-icons .fas.fa-edit {
         color: black;
         font-size: 18px;
@@ -136,11 +135,10 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSI
     }
 
     .action-icons .fas.fa-edit:hover {
-        color: #0056b3; /* Blue on hover */
+        color: #0056b3; 
         transform: scale(1.1);
     }
 
-    /* Specific Style for Delete Icon */
     .action-icons .fas.fa-trash-alt {
         color: red;
         font-size: 18px;

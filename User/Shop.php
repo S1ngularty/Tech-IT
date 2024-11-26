@@ -6,23 +6,19 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
     header("location:http:../Administrator/customer/login.php");
     exit;
 }else{
-    // Retrieve category and search parameters from the URL (if set)
     $category_filter = isset($_GET['category_id']) ? $_GET['category_id'] : '';
     $search_term = isset($_GET['search']) ? $_GET['search'] : '';
 
-    // SQL query to display products, with category and search filters
     $sql_display = "SELECT * FROM product 
                     INNER JOIN stocks USING (product_id)
                     LEFT JOIN product_category ON product.product_id = product_category.product_id 
                     LEFT JOIN category ON product_category.category_id = category.category_id 
                     WHERE stock > 0";
 
-    // Apply category filter if a category is selected
     if ($category_filter) {
         $sql_display .= " AND category.category_id = '$category_filter'";
     }
 
-    // Apply search filter if a search term is provided
     if ($search_term) {
         $sql_display .= " AND (product.product_name LIKE '%$search_term%' OR product.product_description LIKE '%$search_term%')";
     }
@@ -41,7 +37,6 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <style>
-    /* Header styles here (unchanged) */
     #navbar {
         background-color: #333;
         display: flex;
@@ -111,16 +106,14 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
         color: #fff;
     }
 
-    /* Header and Navbar styles remain unchanged */
 
     .main-content {
         padding: 100px 20px 20px;
     }
 
-    /* Product Grid */
     .product-container {
         display: grid;
-        grid-template-columns: repeat(3, 1fr); /* 3 items per row */
+        grid-template-columns: repeat(3, 1fr);
         gap: 35px;
         margin-top: 20px;
     }
@@ -134,17 +127,15 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
         background-color: #fff;
     }
 
-    /* Ensure that images are responsive and maintain their aspect ratio */
     .product-card img {
-        width: 100%; /* Take up full width of the card */
-        height: auto; /* Maintain aspect ratio */
-        max-height: 300px; /* Set a maximum height to prevent large images */
-        object-fit: cover; /* Make sure the image covers the available space */
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+        object-fit: cover; 
         border-radius: 10px;
-        transition: transform 0.3s ease-in-out; /* Optional zoom effect on hover */
+        transition: transform 0.3s ease-in-out; 
     }
 
-    /* Add a zoom effect on hover for better user experience */
     .product-card img:hover {
         transform: scale(1.05);
     }
@@ -183,7 +174,6 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
     
 </style>
 <body>
-   <!-- Header -->
 <nav id="navbar">
     <ul>
         <li id="logo"><strong>Tech-IT</strong></li>
@@ -203,9 +193,7 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
                 ?>    
             </select>
         </form>
-        
-        <!-- Icons and other nav items here (unchanged) -->
-        
+                
         <div class="icon-group">
             <a href="Shop.php">
                 <i class="fas fa-shopping-bag" style="color:#fff; margin-right:15px;"></i>
@@ -225,12 +213,10 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
     </ul>
 </nav>
 
-    <!-- Main Content -->
     <div class="main-content">
         
     <div class="product-container">
     <?php 
-    // If there are products returned from the query, display them
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
             echo '<div class="product-card">';

@@ -19,11 +19,7 @@ $result3=mysqli_query($conn,$sql3);
 if(mysqli_num_rows($result3)>0){
     $row3=mysqli_fetch_assoc($result3);
 }
-// $sql4="SELECT * FROM orders  order by review_id DESC LIMIT 1";
-// $result4=mysqli_query($conn,$sql4);
-// if(mysqli_num_rows($result4)>0){
-//     $row4=mysqli_fetch_assoc($result4);
-// }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -10,9 +10,10 @@ if(!isset($_SESSION['user_id']) && !isset($_SESSION['role']) && !isset($_SESSION
 
 echo $user_id = $_SESSION['user_id'];
 
-$sql_display = "SELECT  p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id
+$sql_display = "SELECT  p.product_name, p.price, c.quantity, p.product_description, p.product_img, p.date_added, c.date_placed, c.cart_id, s.stock
                 FROM product p 
                 INNER JOIN cart c ON p.product_id = c.product_id
+                INNER JOIN stocks s ON p.product_id = s.product_id
                 WHERE c.account_id = ?";
 $stmt = mysqli_prepare($conn, $sql_display);
 mysqli_stmt_bind_param($stmt, 'i', $user_id);
@@ -29,7 +30,6 @@ $result = mysqli_stmt_get_result($stmt);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Navbar */
         #navbar {
             background-color: #333;
             display: flex;
@@ -41,16 +41,7 @@ $result = mysqli_stmt_get_result($stmt);
             width: 100%;
             z-index: 1;
         }
-/* #navbar {
-    background-color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 50px;
-    width: 100%;
-    z-index: 1;
-    position: fixed;
-} */
+
         #logo {
             font-size: 24px;
             color: #fff;
@@ -80,15 +71,12 @@ $result = mysqli_stmt_get_result($stmt);
             color: #fff;
             text-decoration: none;
 
-            /* font-weight: bold; */
         }
 
-        /* Main Content */
         .main-content {
             padding: 100px 20px 20px;
         }
 
-        /* Product Container */
         .product-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -127,7 +115,6 @@ $result = mysqli_stmt_get_result($stmt);
             margin: 5px 0;
         }
 
-        /* Buttons */
         .product-card .btn-danger, .product-card .btn-update {
             padding: 5px 12px;
             border-radius: 5px;
@@ -174,7 +161,6 @@ $result = mysqli_stmt_get_result($stmt);
 .checkout-button:hover {
     background-color: #218838;
 }
-/* Icon group styling */
 .icon-group {
     display: flex;
     align-items: center;
@@ -185,7 +171,6 @@ $result = mysqli_stmt_get_result($stmt);
     </style>
 </head>
 <body>
-   <!-- Navbar -->
 <nav id="navbar">
     <div id="logo">Tech-IT</div>
     <div class="icon-group">
@@ -205,7 +190,6 @@ $result = mysqli_stmt_get_result($stmt);
     </ul>
 </nav>
 
-    <!-- Main Content -->
     <div class="main-content">
         <h2>Shopping Cart</h2>
         <div class="product-container">
@@ -223,7 +207,7 @@ $result = mysqli_stmt_get_result($stmt);
                     echo '<a href="delete.php?id=' . $row['cart_id'] . '" class="btn btn-danger btn-remove">Remove from Cart</a>';
                     echo '<form action="update.php" method="POST" style="display:inline-block;">';
                     echo '<input type="hidden" name="cart_id" value="' . $row['cart_id'] . '">';
-                    echo '<input type="number" name="quantity" value="' . $row['quantity'] . '" min="1" step="1" style="width: 50px; margin-right:10px; margin-left:20px;">';
+                    echo '<input type="number" name="quantity" value="1" min="1" max="' . $row['stock'] . '" step="1"style="width: 50px; margin-right:10px; margin-left:20px;">';
                     echo '<button type="submit" class="btn-update">Update Quantity</button>';
                     echo '</form>';
                     echo '</div>';
@@ -231,7 +215,6 @@ $result = mysqli_stmt_get_result($stmt);
             }
              else {
                 echo "<p>Your cart is currently empty.</p>";
-                //echo $user_id;
             }
         }
            ?>

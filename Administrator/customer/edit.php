@@ -48,7 +48,6 @@ img{
     border: solid thin;
     border-radius: 50%;
 }
-/* Modal Background */
 .modal {
     display: none;
     position: fixed;
@@ -63,12 +62,10 @@ img{
     align-items: center;
 }
 
-/* Show Modal When Targeted */
 .modal:target {
     display: flex;
 }
 
-/* Modal Content Styling */
 .modal-content {
     background-color: #fff;
     padding: 20px;
@@ -79,7 +76,6 @@ img{
     position: relative;
 }
 
-/* Close Button Styling */
 .close-btn {
     position: absolute;
     top: 10px;
@@ -93,7 +89,6 @@ img{
     color: black;
 }
 
-/* Form Styling */
 .form-group {
     margin-bottom: 15px;
     text-align: left;
@@ -137,12 +132,12 @@ img{
     align-items: center;
 }
 }
-/* Show Modal When Targeted */
+
 .modal:target {
     display: flex;
 }
 
-/* Modal Content Styling */
+
 .modal-content {
     background-color: #fff;
     padding: 20px;
@@ -153,7 +148,7 @@ img{
     position: relative;
 }
 
-/* Close Button Styling */
+
 .close-btn {
     position: absolute;
     top: 10px;
@@ -167,7 +162,6 @@ img{
     color: black;
 }
 
-/* Form Styling */
 .form-group {
     margin-bottom: 15px;
     text-align: left;
@@ -267,7 +261,6 @@ img{
     </div>
 </form>
 
-<!-- Password Change Modal -->
 <div id="passwordModal" class="modal">
     <div class="modal-content">
         <a href="#" class="close-btn">&times;</a>
@@ -287,7 +280,7 @@ img{
                 <label for="confirmPassword">Confirm Password</label>
                 <input type="password" id="confirmPassword" name="confirm_password" class="form-control" required>
             </div>
-            <button type="submit" name="update_pass" class="btn btn-primary">Submit</button>
+            <button type="submit" name="update_password" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </div>
