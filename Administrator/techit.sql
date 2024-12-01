@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2024 at 02:19 AM
+-- Generation Time: Nov 27, 2024 at 06:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -44,9 +44,8 @@ CREATE TABLE `account` (
 --
 
 INSERT INTO `account` (`account_id`, `user_id`, `email`, `password`, `role`, `profile_img`, `account_status`) VALUES
-(31, 40, 'user@example.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'user', '6745d88633a194.27699598.png', 'activate'),
-(32, 41, 'admin@example.com', 'bfe54caa6d483cc3887dce9d1b8eb91408f1ea7a', 'admin', '6745daaa027830.79065526.png', 'activate'),
-(34, 45, 'levi@example.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'admin', '6745e139257de2.90392168.png', 'activate');
+(37, 48, 'asher@example.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'admin', '67468ac7149af2.41553869.png', 'activate'),
+(38, 49, 'tolits@example.com', 'f7c3bc1d808e04732adf679965ccc34ca7ae3441', 'user', '67468af69414e8.80576942.jpg', 'activate');
 
 -- --------------------------------------------------------
 
@@ -78,6 +77,7 @@ CREATE TABLE `category` (
 --
 
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
+(18, 'Gaming'),
 (10, 'Laptop'),
 (16, 'Mouse'),
 (14, 'Uncategorized'),
@@ -99,14 +99,6 @@ CREATE TABLE `orderline` (
   `created` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orderline`
---
-
-INSERT INTO `orderline` (`orderline_id`, `order_id`, `product_id`, `quantity`, `unit_price`, `total_price`, `created`) VALUES
-(31, 29, 13, 1, 200, 200, '2024-11-26 22:44:08'),
-(33, 30, 12, 1, 1500, 1500, '2024-11-26 23:12:26');
-
 -- --------------------------------------------------------
 
 --
@@ -120,15 +112,6 @@ CREATE TABLE `orders` (
   `total_amount` int(11) NOT NULL,
   `status` enum('pending','shipped') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orders`
---
-
-INSERT INTO `orders` (`order_id`, `account_id`, `orderDate`, `total_amount`, `status`) VALUES
-(28, 31, '2024-11-26 22:27:40', 1000, 'shipped'),
-(29, 31, '2024-11-26 22:44:08', 6200, 'shipped'),
-(30, 31, '2024-11-26 23:12:26', 1500, 'pending');
 
 -- --------------------------------------------------------
 
@@ -171,9 +154,16 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `product_name`, `price`, `product_description`, `product_img`, `date_added`) VALUES
-(5, 'CPU', 400, ' It is the primary component of a computer that performs most of the processing and control functions', '672479b4d18d24.55399969.jpg', '2024-11-01 10:12:27'),
+(5, 'Ryzen 9 3900XT', 700, 'The **AMD Ryzen 9 3900XT** is a high-performance desktop processor designed for gamers and creators. It features 12 cores and 24 threads, with a boost clock of up to 4.7 GHz, delivering exceptional multitasking and gaming capabilities. Built on the 7nm process, it supports PCIe 4.0 for faster data transfer and is compatible with AM4 motherboards. With its impressive single-threaded and multi-threaded performance, it’s ideal for demanding tasks like 4K gaming, video editing, and 3D rendering.', '6746b173b94a36.60412385.png', '2024-11-01 10:12:27'),
 (12, 'Acer Nitro 5', 1500, 'acer Nitro 5 Gaming Laptop, 9th Gen Intel Core i5-9300H, NVIDIA GeForce GTX 1650, 15.6\" Full HD IPS Display, WiFi 6, Waves MaxxAudio, Backlit Keyboard (32GB RAM/512GB PCIe SSD/1TB HDD)', '6745d97f8142e2.90072598.png', '2024-11-26 22:21:51'),
-(13, 'PRO X SUPERLIGHT 2 DEX', 200, 'PRO X SUPERLIGHT 2 DEX is a 60 g asymmetrical mouse featuring advanced HERO 2 sensor, robust LIGHTSPEED wireless, and LIGHTFORCE switches while delivering up to 95 hours of battery life.', '6745da267084a0.63666419.png', '2024-11-26 22:24:38');
+(13, 'PRO X SUPERLIGHT 2 DEX', 200, 'PRO X SUPERLIGHT 2 DEX is a 60 g asymmetrical mouse featuring advanced HERO 2 sensor, robust LIGHTSPEED wireless, and LIGHTFORCE switches while delivering up to 95 hours of battery life.', '6745da267084a0.63666419.png', '2024-11-26 22:24:38'),
+(14, 'Razer BlackShark V2', 30, 'Audio Quality: Advanced TriForce Titanium 50mm Drivers deliver crystal-clear sound with enhanced highs, mids, and lows.\r\nComfort: Memory foam ear cushions provide exceptional comfort for long hours of use.\r\nMicrophone: Detachable HyperClear Cardioid Mic ensures superior voice clarity and noise isolation.\r\nCompatibility: Works with PC, PlayStation, Xbox, and mobile devices.\r\nExtras: Includes USB sound card for advanced audio tuning.', '67468c7a692a69.00447251.png', '2024-11-27 11:05:30'),
+(15, 'ASUS ROG ALLY Z1', 1500, 'The ASUS ROG Ally is a powerful handheld gaming console with a 7-inch Full HD 120Hz touchscreen, AMD Ryzen Z1 processors, and Windows 11 support. It offers seamless access to PC games, ergonomic controls, and expandable storage for gaming on the go.', '67468d6baff0d0.12197653.png', '2024-11-27 11:09:31'),
+(16, 'Intel Iris Xe i5-1235u', 200, 'The **Intel Iris Xe** is an integrated GPU found in Intel’s 11th Gen Core processors, designed for casual gaming, creative tasks, and productivity. It supports modern features like **4K video playback**, **DirectX 12**, and **AI-powered enhancements**, offering decent performance for lightweight gaming and multimedia editing. While not as powerful as discrete GPUs, it’s a great option for thin and light laptops.', '67468dcb69f531.57232761.png', '2024-11-27 11:11:07'),
+(17, 'Seagate 1TB HDD', 50, '\r\nAn HDD (Hard Disk Drive) is a traditional data storage device that uses spinning magnetic disks to store and retrieve data. It offers large storage capacities at an affordable price, making it ideal for storing extensive files like movies, games, and backups. However, it is slower and less durable compared to modern SSDs due to its mechanical components.', '67468e23a93790.18612314.png', '2024-11-27 11:12:35'),
+(18, 'ASUS ROG STRIX LC II 360 RGB All-in-One Liquid CPU Cooler Fan', 120, 'Seventh Gen Asetek pump delivers exceptional cooling and minimal noise with an operating range starting at 840 rpm.\r\nThree ROG-designed radiator fans provide optimized airflow and static pressure.', '67468e751bfc02.95572904.png', '2024-11-27 11:13:57'),
+(19, 'Mystery Screwdriver', 40, 'TRADE OFFER: you give us $39.99, we give you the best screwdriver on the market - in a color of our choice! This is THE BEST PRICE we’ve ever offered on the LTT Screwdriver, and I wouldn’t expect to see a deal like this again for a long time… so don’t hesitate to snatch one up!\r\n\r\nUltra-satisfying ratchet feel & sound\r\nOptimized for smoothness and the most satisfying feel and sound, tightening every screw is a moment in itself. We don’t blame you if you find excuses to use it! ', '67468ef092e711.09772530.png', '2024-11-27 11:16:00'),
+(20, 'NZXT Capsule Mini', 50, 'For gaming, a good microphone ensures clear communication and a better overall experience. The **HyperX QuadCast S** is a popular choice, offering excellent sound quality with RGB lighting for a stylish look. It includes a built-in pop filter and shock mount to reduce noise and vibration, making it ideal for both gaming and streaming. Another great option is the **Blue Yeti**, known for its versatile design and exceptional audio clarity. It\'s a reliable USB mic that\'s easy to set up and works well for gaming, podcasting, or streaming. Both are top-notch picks for gamers who value audio quality.', '6746b0d81a96c9.34158394.png', '2024-11-27 13:40:40');
 
 -- --------------------------------------------------------
 
@@ -193,7 +183,14 @@ CREATE TABLE `product_category` (
 INSERT INTO `product_category` (`category_id`, `product_id`) VALUES
 (8, 5),
 (10, 12),
-(14, 13);
+(16, 13),
+(18, 14),
+(14, 15),
+(10, 16),
+(10, 17),
+(14, 18),
+(14, 19),
+(18, 20);
 
 -- --------------------------------------------------------
 
@@ -227,9 +224,16 @@ CREATE TABLE `stocks` (
 --
 
 INSERT INTO `stocks` (`product_id`, `stock`) VALUES
-(5, 15),
+(5, 13),
 (12, 14),
-(13, 14);
+(13, 14),
+(14, 16),
+(15, 10),
+(16, 20),
+(17, 14),
+(18, 17),
+(19, 14),
+(20, 20);
 
 -- --------------------------------------------------------
 
@@ -251,9 +255,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `first_name`, `last_name`, `age`, `sex`, `contacts`) VALUES
-(40, 'User', 'User', 20, 'Male', '09801851852'),
-(41, 'Admin', 'Administrator', 25, 'Female', '09141541478'),
-(45, 'Levi', 'Asher', 22, 'Male', '09252562569');
+(48, 'Levi', 'Penaverde', 20, 'Male', '09385736287'),
+(49, 'Angelito', 'Jacalan', 20, 'Male', '09501841852');
 
 -- --------------------------------------------------------
 
@@ -350,37 +353,37 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `orderline`
 --
 ALTER TABLE `orderline`
-  MODIFY `orderline_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `orderline_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -392,7 +395,7 @@ ALTER TABLE `review`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables

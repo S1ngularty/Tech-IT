@@ -80,13 +80,13 @@ form{
             </div>
             <div class="div2">
             <div class="username">
-                    <label for="" class="form-label">Username</label>
+                    <label for="" class="form-label">Email</label>
                      <input type="text" class="form-control" name="username" placeholder="User@example.com" >
                 </div>
                 <br>
                 <div class="password">
                     <label for="" class="form-label">Password</label>
-                     <input type="password  " class="form-control" name="password" >
+                     <input type="password" class="form-control" name="password" >
                 </div>
                 <br>
                 <div class="role">

@@ -15,14 +15,8 @@ if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'admin' && isset($_SESSI
     if (mysqli_affected_rows($conn) > 0) {
         print "<body>
             <div class='container'>
-                <div class='acton' id='action_form'>
-                    <form action='index.php' method='post'>
-                        <label class='form-label'>Sort</label>
-                        <select class='form-select' name='sort' onchange='this.form.submit()'>
-                            <option value='order by product_name ASC'>Ascending</option>
-                            <option value='order by product_name DESC'>Descending</option>
-                        </select>
-                    </form>
+                <div class='action' id='action_form'>
+
                 </div>
                 <div class='create'>
                     <a href='create.php' class='create-link'>Create New</a>

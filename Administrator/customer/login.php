@@ -85,8 +85,8 @@ include("../../User/alert.php");
         <h3>LOG IN</h3>
     </div>
 <div id="username">
-    <label for="username" class="form-label">Username</label>
-    <input type="text" class="form-control" name="username" placeholder="User@example.com" required>
+    <label for="username" class="form-label">Email</label>
+    <input type="text" class="form-control" name="username" placeholder="Email@example.com" required>
 </div>
 <div id="password">
     <label for="password" class="form-label">Password</label>

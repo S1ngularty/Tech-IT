@@ -207,7 +207,7 @@ $result = mysqli_stmt_get_result($stmt);
                     echo '<a href="delete.php?id=' . $row['cart_id'] . '" class="btn btn-danger btn-remove">Remove from Cart</a>';
                     echo '<form action="update.php" method="POST" style="display:inline-block;">';
                     echo '<input type="hidden" name="cart_id" value="' . $row['cart_id'] . '">';
-                    echo '<input type="number" name="quantity" value="1" min="1" max="' . $row['stock'] . '" step="1"style="width: 50px; margin-right:10px; margin-left:20px;">';
+                    echo '<input type="number" name="quantity" value="' . $row['quantity'] . '" min="1" max="' . $row['stock'] . '" step="1"style="width: 50px; margin-right:10px; margin-left:20px;">';
                     echo '<button type="submit" class="btn-update">Update Quantity</button>';
                     echo '</form>';
                     echo '</div>';
